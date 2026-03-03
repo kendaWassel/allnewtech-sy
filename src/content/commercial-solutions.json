@@ -1,0 +1,70 @@
+{
+  "hero": {
+    "title": "Commercial Security & Technology Solutions",
+    "subtitle": "Professional systems built to protect your business and enhance operations."
+  },
+  "intro": {
+    "description": "All New Tech provides robust, scalable security and AV solutions for offices, retail, warehouses, industrial sites, and commercial premises. Our systems are designed to meet operational demands, compliance standards, and future growth."
+  },
+  "services": [
+    {
+      "title": "Commercial CCTV Systems",
+      "description": "Reliable surveillance for business security and monitoring. Our commercial CCTV solutions help protect assets, reduce theft, and improve operational oversight.",
+      "features": [
+        "High-resolution cameras for indoor and outdoor use",
+        "Centralised monitoring and remote access",
+        "Evidence recording and incident review",
+        "Scalable systems for multi-site businesses"
+      ]
+    },
+    {
+      "title": "Commercial Alarm Systems",
+      "description": "Advanced alarm solutions for complete business protection. We design alarm systems that respond rapidly to unauthorised access, supporting staff safety and asset protection.",
+      "features": [
+        "Intruder and perimeter detection",
+        "Panic alarms and emergency alerts",
+        "Integration with CCTV and access control",
+        "Monitoring options available"
+      ]
+    },
+    {
+      "title": "Commercial Access Control",
+      "description": "Controlled entry for secure and efficient workplaces. Manage staff and visitor access with intelligent access control systems that enhance security and accountability.",
+      "features": [
+        "Card and key-fob systems",
+        "PIN and biometric access",
+        "Zoned access permissions",
+        "Staff activity tracking"
+      ]
+    },
+    {
+      "title": "Commercial Audio & Visual Systems",
+      "description": "Professional AV solutions for business environments. We design and install audio-visual systems that support communication, branding, and productivity.",
+      "features": [
+        "Meeting rooms and boardrooms",
+        "Digital signage and displays",
+        "Background audio systems",
+        "Conference and presentation setups"
+      ]
+    }
+  ],
+  "cta": {
+    "title": "Start Your Project Today",
+    "description": "Book a free consultation and let our experts design the right solution for your property.",
+    "buttons": [
+      {
+        "text": "Request a Quote",
+        "link": "/custom-quote"
+      },
+      {
+        "text": "Book a Site Visit",
+        "link": "/site-visit"
+      }
+    ]
+  },
+    "discover": {
+    "title": "Looking for home solutions?",
+    "button": "Discover Commercial Solutions"
+  }
+}
+

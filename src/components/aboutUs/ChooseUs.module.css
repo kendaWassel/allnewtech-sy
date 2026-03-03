@@ -1,0 +1,14 @@
+.arrowLeft::before,.arrowRight::before{
+    position: absolute;
+    content: "";
+    height: 2px;
+    background-color: black;
+    width: 12rem;
+    top: 50%;
+}
+.arrowLeft::before{
+    right: -100%;
+}
+.arrowRight::before{
+    right: 100%;
+}

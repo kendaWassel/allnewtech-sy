@@ -1,0 +1,16 @@
+{
+  "hero": {
+    "title": "Our Work",
+    "subtitle": "Real Projects. Proven Results"
+  },
+  "filters": {
+    "all": "All Projects",
+    "home": "Home Solutions",
+    "commercial": "Commercial Solutions",
+    "cctv": "CCTV",
+    "alarm": "Alarm Systems",
+    "access": "Access Control",
+    "av": "Audio & Visual"
+  }
+}
+

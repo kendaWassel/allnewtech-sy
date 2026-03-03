@@ -1,0 +1,32 @@
+{
+  "mission": {
+    "title": "Our Mission",
+    "description": "To deliver high-quality, dependable security and automation solutions that improve safety, convenience, and control for homes, offices, and commercial facilities."
+  },
+  "whoWeAre": {
+    "title": "Who We Are",
+    "description": "With years of industry experience, All New Tech has become a trusted partner for individuals and businesses seeking modern security systems and smart automation installation. Our team combines technical expertise with customer-first service to deliver systems that work — every time."
+  },
+  "whyChooseUs": {
+    "title": "Why Choose Us",
+    "points": [
+      {
+        "title": "Experienced Technicians",
+        "description": "Certified, trained, and fully insured installers."
+      },
+      {
+        "title": "Tailored Solutions",
+        "description": "We assess your needs and design systems that match your space and security goals."
+      },
+      {
+        "title": "High-Quality Products",
+        "description": "We install industry-leading CCTV, alarm, and automation solutions."
+      },
+      {
+        "title": "Aftercare Support",
+        "description": "Reliable maintenance and support long after installation."
+      }
+    ]
+  }
+}
+

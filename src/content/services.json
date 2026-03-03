@@ -1,0 +1,36 @@
+{
+  "hero": {
+    "title": "Our Services",
+    "subtitle": "Advanced Security & Technology Solutions for Homes and Businesses."
+  },
+  "intro": {
+    "description": "At All New Tech, we provide integrated security and smart technology systems designed to protect, control, and enhance residential and commercial properties. Our solutions combine reliability, performance, and ease of use, delivered by experienced professionals."
+  },
+  "categories": {
+    "title": "Our Core Service Categories",
+    "description": "We tailor each system based on the property type, risk level, and user requirements.",
+    "items": [
+      {
+        "title": "Home Solutions",
+        "description": "Intelligent systems designed for residential comfort, safety, and convenience.",
+        "link": "/services/home-solutions"
+      },
+      {
+        "title": "Commercial Solutions",
+        "description": "Scalable, compliant systems built to secure business operations and assets.",
+        "link": "/services/commercial-solutions"
+      }
+    ]
+  },
+  "cta": {
+    "primary": {
+      "text": "Request a Free Site Survey",
+      "link": "/site-visit"
+    },
+    "secondary": {
+      "text": "Get a Custom Quote",
+      "link": "/custom-quote"
+    }
+  }
+}
+

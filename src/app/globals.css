@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+:root {
+  --primary-blue-first: #00B2E3;
+  --primary-blue-second: #0075c9;
+  --secondary: #1d252c;
+  --white: #dde0e3;
+  --yellow: #FBE53D;
+  --inline-padding: 6rem;
+  --small-padding: 1.25rem;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  display: none !important;
+}
+
+/* Style dropdown options to match form styling - Cross-browser compatible */
+/* Target contact form selects specifically */
+.contact-form-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent !important;
+  background-image: none;
+}
+
+/* Style options - Universal approach */
+.contact-form-select option,
+.contact-form-option {
+  background-color: #F3F3F3 !important;
+  color: #000 !important;
+  padding: 0.5rem 1rem !important;
+  font-size: inherit;
+}
+
+/* Selected option styling */
+.contact-form-select option:checked,
+.contact-form-select option:focus {
+  background-color: #F3F3F3 !important;
+  color: #000 !important;
+}
+
+/* Hover state for options (Chrome/Edge) */
+.contact-form-select option:hover {
+  background-color: #E5E5E5 !important;
+}
+
+/* Firefox specific */
+@-moz-document url-prefix() {
+  .contact-form-select option {
+    background-color: #F3F3F3 !important;
+    color: #000 !important;
+    padding: 0.5rem 1rem !important;
+  }
+}
+
+/* Webkit browsers (Chrome, Safari, Edge) */
+@supports (-webkit-appearance: none) {
+  .contact-form-select option {
+    background-color: #F3F3F3 !important;
+    color: #000 !important;
+  }
+}
+
+/* Focus state for select */
+.contact-form-select:focus {
+  outline: none;
+}
+
+.contact-form-select:hover {
+  cursor: pointer;
+}
+
+/* Ensure select container maintains styling */
+.contact-form-select::-ms-expand {
+  display: none; /* Remove default arrow in IE/Edge */
+}

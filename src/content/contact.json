@@ -1,0 +1,180 @@
+{
+  "hero": {
+    "title": "Get in Touch",
+    "subtitle": "Contact us for a free consultation or site visit"
+  },
+  "siteVisit": {
+    "title": "Contact Information",
+    "intro": "Schedule a professional site assessment with one of our specialists.",
+    "fields": {
+      "contactInfo": {
+        "title": "Contact Information",
+        "fields": [
+          {
+            "name": "firstName",
+            "label": "First Name",
+            "type": "text"
+          },
+          {
+            "name": "lastName",
+            "label": "Last Name",
+            "type": "text"
+          },
+          {
+            "name": "email",
+            "label": "Email",
+            "type": "email"
+          },
+          {
+            "name": "phone",
+            "label": "Phone",
+            "type": "tel"
+          }
+        ]
+      },
+      "siteDetails": {
+        "title": "Site Details",
+        "fields": [
+          {
+            "name": "propertyType",
+            "label": "Property Type",
+            "type": "select"
+          },
+          {
+            "name": "postcode",
+            "label": "Post Code",
+            "type": "text"
+          },
+          {
+            "name": "address",
+            "label": "Address",
+            "type": "text"
+          }
+        ]
+      },
+      "services": {
+        "title": "Select Services",
+        "name": "services",
+        "type": "checkbox"
+      },
+      "timing": {
+        "title": "Preferred Visit Timing",
+        "fields": [
+          {
+            "name": "preferredDate",
+            "label": "Preferred Date",
+            "type": "date"  
+          },
+          {
+            "name": "preferredTime",
+            "label": "Preferred Time",
+            "type": "select"
+          }
+        ]
+      },
+      "additional": {
+        "title": "Additional Information",
+        "fields": [
+          {
+            "name": "notes",
+            "label": "Notes / Special Instructions",
+            "type": "textarea",
+            "placeholder": "Example: access instructions, parking info, business hours."
+            
+          }
+        ]
+      },
+      "consent": {
+        "name": "privacyConsent",
+        "label": "I agree to the Privacy Policy and consent to being contacted.",
+        "type": "checkbox"
+        
+      },
+      "submit": {
+        "text": "Book Site Visit"
+      }
+    }
+  },
+  "quoteRequest": {
+    "title": "Contact Information",
+    "intro": "Tell us about your requirements and our team will provide a tailored quote.",
+    "fields": {
+      "contactInfo": {
+        "fields": [
+          {
+            "name": "firstName",
+            "label": "First Name",
+            "type": "text"
+          },
+          {
+            "name": "lastName",
+            "label": "Last Name",
+            "type": "text"
+          },
+          {
+            "name": "email",
+            "label": "Email",
+            "type": "email"
+          },
+          {
+            "name": "phone",
+            "label": "Phone",
+            "type": "tel"
+          }
+        ]
+      },
+      "siteDetails": {
+        "title": "Site Details",
+        "fields": [
+          {
+            "name": "propertyType",
+            "label": "Property Type",
+            "type": "select"
+          },
+          {
+            "name": "postcode",
+            "label": "Post Code",
+            "type": "text"
+          }
+        ]
+      },
+      "services": {
+        "title": "Select Services",
+        "name": "services",
+        "type": "checkbox"
+      },
+      "additional": {
+        "fields": [
+          {
+            "name": "message",
+            "type": "textarea",
+            "placeholder": "Briefly describe your requirements or concerns…"
+          },
+          {
+            "name": "budgetRange",
+            "label": "Budget Range",
+            "type": "select"
+          },
+          {
+            "name": "preferredContact",
+            "label": "Preferred Contact Method",
+            "type": "select"
+          },
+          {
+            "name": "fileUpload",
+            "type": "file"
+          }
+        ]
+      },
+      "consent": {
+        "name": "privacyConsent",
+        "label": "I agree to the Privacy Policy and consent to being contacted.",
+        "type": "checkbox"
+      },
+      "submit": {
+        "text": "Request Quote"
+      }
+    }
+  }
+}
+

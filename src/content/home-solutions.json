@@ -1,0 +1,70 @@
+{
+  "hero": {
+    "title": "Home Security & Smart Technology Solutions",
+    "subtitle": "Protect your home with intelligent systems designed for modern living."
+  },
+  "intro": {
+    "description": "All New Tech delivers advanced home security and audio-visual solutions that provide peace of mind, control, and convenience. Whether you live in a house, apartment, or gated property, our systems are designed to integrate seamlessly into your lifestyle."
+  },
+  "services": [
+    {
+      "title": "Home CCTV Systems",
+      "description": "High-definition surveillance for complete visibility and deterrence. Our home CCTV solutions allow you to monitor your property in real time, day or night, from anywhere using your smartphone or tablet.",
+      "features": [
+        "HD & 4K camera options",
+        "Night vision and motion detection",
+        "Remote live viewing & playback",
+        "Secure data storage solutions"
+      ]
+    },
+    {
+      "title": "Home Alarm Systems",
+      "description": "Smart intruder alarms that respond instantly to threats. We install advanced alarm systems tailored to your property layout, providing immediate alerts and optional professional monitoring.",
+      "features": [
+        "Door, window, and motion sensors",
+        "Mobile notifications",
+        "Wired and wireless systems",
+        "Integration with CCTV and access control"
+      ]
+    },
+    {
+      "title": "Home Access Control",
+      "description": "Secure and convenient entry solutions. Control who enters your home with modern access systems designed for security and ease of use.",
+      "features": [
+        "Smart locks",
+        "Keypad and key-fob entry",
+        "Intercom and video door entry",
+        "Controlled access for gates and garages"
+      ]
+    },
+    {
+      "title": "Home Audio & Visual Systems",
+      "description": "Immersive entertainment and smart media solutions. Upgrade your home with professionally installed audio and visual systems that deliver exceptional performance and seamless control.",
+      "features": [
+        "Home cinema installations",
+        "Multi-room audio systems",
+        "Smart TV mounting and integration",
+        "Centralized control systems"
+      ]
+    }
+  ],
+  "cta": {
+    "title": "Start Your Project Today",
+    "description": "Book a free consultation and let our experts design the right solution for your property.",
+    "buttons": [
+      {
+        "text": "Request a Quote",
+        "link": "/custom-quote"
+      },
+      {
+        "text": "Book a Site Visit",
+        "link": "/site-visit"
+      }
+    ]
+  },
+  "discover": {
+    "title": "Looking for Commercial solutions?",
+    "button": "Discover Home Solutions"
+  }
+}
+
