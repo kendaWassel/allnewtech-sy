@@ -1,7 +1,7 @@
 import { apiConfig, getApiUrl, getImageUrl } from '@/config/api';
 import ProjectsClient from './ProjectsClient';
 
-const PortfolioProjects = async () => {
+const PortfolioProjects = async ({ content, locale = "en" }) => {
   let projects = [];
 
   try {
@@ -10,6 +10,7 @@ const PortfolioProjects = async () => {
       next: { revalidate: 60 },
       headers: {
         'Content-Type': 'application/json',
+        'Accept-Language': locale,
       },
     });
 
@@ -39,7 +40,7 @@ const PortfolioProjects = async () => {
     new Set(projects.map((p) => p.service).filter(Boolean))
   ).sort();
 
-  return <ProjectsClient projects={projects} services={services} />;
+  return <ProjectsClient projects={projects} services={services} content={content} locale={locale} />;
 };
 
 export default PortfolioProjects;

@@ -1,0 +1,54 @@
+{
+  "nav": [
+    {
+      "label": "About Us",
+      "href": "/about"
+    },
+    {
+      "label": "Services",
+      "href": "/services",
+      "hasDropdown": true
+    },
+    {
+      "label": "Projects",
+      "href": "/projects"
+    },
+    {
+      "label": "Contact Us",
+      "href": "/contact-us"
+    }
+  ],
+  "servicesDropdown": {
+    "homeLabel": "Home Services",
+    "homeHref": "/services/home-solutions",
+    "commercialLabel": "Commercial Services",
+    "commercialHref": "/services/commercial-solutions"
+  },
+  "mobileNav": [
+    {
+      "label": "Home",
+      "href": "/"
+    },
+    {
+      "label": "About Us",
+      "href": "/about"
+    },
+    {
+      "label": "Services",
+      "href": "/services"
+    },
+    {
+      "label": "Projects",
+      "href": "/projects"
+    },
+    {
+      "label": "Contact Us",
+      "href": "/contact-us"
+    }
+  ],
+  "languageSwitch": {
+    "toEnglish": "Switch to English",
+    "toArabic": "Switch to Arabic"
+  },
+  "phoneAriaPrefix": "Call us at"
+}

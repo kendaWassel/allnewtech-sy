@@ -2,8 +2,8 @@ import BrandsLoading from './BrandsLoading';
 
 const AboutLoading = () => {
     return (
-        <section className='lg:px-[var(--inline-padding)] py-[3rem]'>
-            <div className='flex lg:flex-row flex-col center justify-between'>
+        <section className='lg:px-[var(--inline-padding)] py-[3rem] lg:bg-[var(--secondary)] lg:text-white'>
+            <div className='flex lg:flex-row flex-col center justify-between gap-6'>
                 <div className='lg:w-[55%] lg:p-0 px-[4.3rem]'>
                     <div className="h-6 bg-gray-200 rounded animate-pulse mb-4"></div>
                     <div className="h-6 bg-gray-200 rounded animate-pulse mb-4"></div>

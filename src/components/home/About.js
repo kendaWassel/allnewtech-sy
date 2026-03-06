@@ -1,9 +1,10 @@
-import home from '@/content/homepage'
+import { getContent } from "@/lib/get-content";
 import Image from 'next/image'
 import Brands from './Brands'
 import { apiConfig, getApiUrl, getImageUrl } from '@/config/api';
 
-const About = async () => {
+const About = async ({ content: passedContent, locale = "en" }) => {
+    const content = passedContent || (await getContent(locale, "homepage"));
     let companies = [];
     let error = null;
 
@@ -13,6 +14,7 @@ const About = async () => {
             next: { revalidate: 60 },
             headers: {
                 'Content-Type': 'application/json',
+                'Accept-Language': locale,
             },
         });
 
@@ -26,7 +28,6 @@ const About = async () => {
             throw new Error(data.msg || 'API request was not successful');
         }
         
-        // Sort by priority if available, otherwise by id
         companies = data.data
             .map((company) => ({
                 id: company.id,
@@ -40,19 +41,17 @@ const About = async () => {
         companies = [];
     }
 
-    // Take only first 4 companies for About section
     const firstFourCompanies = companies.slice(0, 4);
     
-    // Split first 4 companies into rows of 2 for the desktop layout
     const firstRow = firstFourCompanies.slice(0, 2);
     const secondRow = firstFourCompanies.slice(2, 4);
 
     return (
-        <section className='lg:px-[var(--inline-padding)] py-[3rem]'>
-            <div className='flex lg:flex-row flex-col center justify-between'>
-                <p className='lg:w-[55%] lg:p-0 px-[4.3rem] lg:text-2xl leading-[1.3] lg:text-start text-center'>{home.about.description}</p>
-                <div className='lg:block hidden w-[32%] lg:text-start text-center'>
-                    <h2 className='font-bold text-[2rem] lg:block hidden'>{home.trustedBy.title}</h2>
+        <section className='lg:px-[var(--inline-padding)] py-[3rem] lg:bg-[var(--secondary)] lg:text-white'>
+            <div className='flex lg:flex-row flex-col center justify-between gap-6'>
+                <p className='lg:w-[55%] lg:p-0 px-[4.3rem] lg:text-2xl leading-[1.3] text-center lg:text-start'>{content?.about?.description}</p>
+                <div className='lg:block hidden w-[32%] text-center lg:text-start'>
+                    <h2 className='font-bold text-[2rem] lg:block hidden'>{content?.trustedBy?.title}</h2>
                     {/* brands  */}
                     {error ? (
                         <div className='mt-[2rem]'>
@@ -98,7 +97,7 @@ const About = async () => {
                 </div>
                 <div>
                 <h2 className='lg:hidden sr-only'>Trusted By</h2>
-                <Brands className="lg:hidden" companies={error ? null : firstFourCompanies} />
+                <Brands className="lg:hidden" companies={error ? null : firstFourCompanies} locale={locale} />
                 </div>
             </div>
         </section>

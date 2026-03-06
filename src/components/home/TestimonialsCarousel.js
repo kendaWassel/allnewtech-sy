@@ -23,9 +23,9 @@ const TestimonialsCarousel = ({ testimonials }) => {
 
   return (
     <>
-      {/* Left Navigation Arrow */}
+      {/* Previous Navigation Arrow */}
       <button
-        className="z-120 absolute lg:left-5 left-[6px] top-1/2 -translate-y-1/2 
+        className="z-120 absolute lg:start-5 start-[6px] top-1/2 -translate-y-1/2 
           lg:w-[40px] lg:h-[55px] w-[24px] h-[32px]
           shadow-[0px_3px_3px_#00000040] bg-[var(--primary-blue-second)] 
           flex items-center justify-center hover:bg-[var(--primary-blue-second)] hover:cursor-pointer transition 
@@ -41,7 +41,7 @@ const TestimonialsCarousel = ({ testimonials }) => {
         />
       </button>
       {/* blue shape  */}
-      <div className="md:block hidden absolute right-0 lg:top-[90px] top-[60px] z-110">
+      <div className="md:block hidden absolute end-0 lg:top-[90px] top-[60px] z-110">
         <Image src="/icons/blue-shape.svg" alt="blue shape" width={355} height={400} className='lg:w-[355px] lg:h-[400px] w-[250px]' />
       </div>
       <Swiper
@@ -65,7 +65,7 @@ const TestimonialsCarousel = ({ testimonials }) => {
               className="lg:px-[var(--inline-padding)] px-[var(--small-padding)] flex items-center relative z-100 h-full"
               aria-live="polite"
             >
-              <div className="absolute xl:w-[30rem] xl:h-[30rem] lg:w-[25rem] lg:h-[25rem] md:w-[20rem] md:h-[20rem] sm:w-[10rem] sm:h-[10rem] w-[6rem] h-[6rem] bg-white lg:left-[10%] sm:left-[3rem] left-[2rem] rounded-full flex items-center justify-center overflow-hidden">
+              <div className="absolute xl:w-[30rem] xl:h-[30rem] lg:w-[25rem] lg:h-[25rem] md:w-[20rem] md:h-[20rem] sm:w-[10rem] sm:h-[10rem] w-[6rem] h-[6rem] bg-white lg:start-[10%] sm:start-[3rem] start-[2rem] rounded-full flex items-center justify-center overflow-hidden">
                 <User imageUrl={testimonial.image} alt="Customer testimonial" />
               </div>
               <div className="md:flex-1 sm:flex-3 flex-2" aria-hidden="true" />
@@ -95,9 +95,9 @@ const TestimonialsCarousel = ({ testimonials }) => {
           </SwiperSlide>
         ))}
       </Swiper>
-      {/* Right Navigation Arrow */}
+      {/* Next Navigation Arrow */}
       <button
-        className="absolute z-120 lg:right-5 right-[6px] top-1/2 -translate-y-1/2 
+        className="absolute z-120 lg:end-5 end-[6px] top-1/2 -translate-y-1/2 
           lg:w-[40px] lg:h-[55px] w-[24px] h-[32px]
           shadow-[0px_3px_3px_#00000040] md:bg-[var(--secondary)] bg-[var(--primary-blue-second)] 
           flex items-center justify-center hover:bg-[var(--primary-blue-second)] hover:cursor-pointer transition-colors 

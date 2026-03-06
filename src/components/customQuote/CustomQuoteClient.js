@@ -1,32 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { getApiUrl } from '@/config/api';
-import contact from '@/content/contact.json';
-
-const quoteRequest = contact.quoteRequest;
-const fields = quoteRequest.fields;
-const contactInfo = fields.contactInfo;
-const siteDetails = fields.siteDetails;
-const additional = fields.additional;
-const services = fields.services;
-const consent = fields.consent;
-const submit = fields.submit;
-
-const firstName = contactInfo.fields.find((field) => field.name === 'firstName')?.label;
-const lastName = contactInfo.fields.find((field) => field.name === 'lastName')?.label;
-const email = contactInfo.fields.find((field) => field.name === 'email')?.label;
-const phone = contactInfo.fields.find((field) => field.name === 'phone')?.label;
-const postCode = siteDetails.fields.find((field) => field.name === 'postcode')?.label;
-const propertyType =
-  siteDetails.fields.find((field) => field.name === 'propertyType')?.label;
-const requirements =
-  additional.fields.find((field) => field.name === 'message')?.placeholder;
-const preferredContact =
-  additional.fields.find((field) => field.name === 'preferredContact')?.label;
-const budgetRange =
-  additional.fields.find((field) => field.name === 'budgetRange')?.label;
-const fileUpload =
-  additional.fields.find((field) => field.name === 'fileUpload')?.label;
+import fallbackContact from "@/content/contact";
 
 const validateQuoteForm = (formData) => {
   if (!formData.firstName.trim()) return 'First name is required.';
@@ -62,7 +37,29 @@ const CustomQuoteClient = ({
     budgetRange: [],
   },
   error = null,
+  content = null,
 }) => {
+  const contact = content || fallbackContact;
+  const quoteRequest = contact?.quoteRequest || {};
+  const fields = quoteRequest?.fields || {};
+  const contactInfo = fields?.contactInfo || {};
+  const siteDetails = fields?.siteDetails || {};
+  const additional = fields?.additional || {};
+  const services = fields?.services || {};
+  const consent = fields?.consent || {};
+  const submit = fields?.submit || {};
+
+  const firstName = contactInfo?.fields?.find((field) => field.name === 'firstName')?.label;
+  const lastName = contactInfo?.fields?.find((field) => field.name === 'lastName')?.label;
+  const email = contactInfo?.fields?.find((field) => field.name === 'email')?.label;
+  const phone = contactInfo?.fields?.find((field) => field.name === 'phone')?.label;
+  const postCode = siteDetails?.fields?.find((field) => field.name === 'postcode')?.label;
+  const propertyType = siteDetails?.fields?.find((field) => field.name === 'propertyType')?.label;
+  const requirements = additional?.fields?.find((field) => field.name === 'message')?.placeholder;
+  const preferredContact = additional?.fields?.find((field) => field.name === 'preferredContact')?.label;
+  const budgetRange = additional?.fields?.find((field) => field.name === 'budgetRange')?.label;
+  const fileUpload = additional?.fields?.find((field) => field.name === 'fileUpload')?.label || 'File upload';
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -392,7 +389,7 @@ const CustomQuoteClient = ({
 
     <div className="bg-[#F3F3F3] rounded-[4px] md:rounded-[12px] px-[0.5rem] py-[0.35rem] md:px-[1rem] md:py-[0.75rem] mb-[2.5rem] md:mb-[4.5rem]">
       <label className="flex items-center justify-between gap-4 text-[0.6rem] md:text-base cursor-pointer">
-        <span className="text-[var(--secondary)]">{formData.file?.name || 'File upload'}</span>
+        <span className="text-[var(--secondary)]">{formData.file?.name || fileUpload}</span>
         <input
           type="file"
           name="file"

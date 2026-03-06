@@ -3,10 +3,10 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import ServicesCTA from "./ServicesCTA";
-import homeSolutions from "@/content/home-solutions";
 
-const AvailableServicesClient = ({ services, propertyType = 'home', error = null }) => {
+const AvailableServicesClient = ({ services, propertyType = 'home', error = null, ctaContent, locale = "en" }) => {
   const [activeSection, setActiveSection] = useState(0);
+  const ctaTitle = ctaContent?.title || "Start Your Project Today";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -126,7 +126,7 @@ const AvailableServicesClient = ({ services, propertyType = 'home', error = null
                     : ""
                 }`}
               >
-                <span className={`${activeSection === services.length ? "border-l-[5px] pl-2" : ""} text-xl font-bold text-[var(--secondary)]`}>{homeSolutions.cta.title}</span>
+                <span className={`${activeSection === services.length ? "border-l-[5px] pl-2" : ""} text-xl font-bold text-[var(--secondary)]`}>{ctaTitle}</span>
               </button>
             </nav>
           </div>
@@ -174,7 +174,7 @@ const AvailableServicesClient = ({ services, propertyType = 'home', error = null
               </div>
             </div>
           ))}
-          <ServicesCTA id="start-project-cta" className="scroll-mt-[100px]"/>
+          <ServicesCTA id="start-project-cta" className="scroll-mt-[100px]" content={ctaContent} locale={locale} />
         </div>
       </div>
     </section>

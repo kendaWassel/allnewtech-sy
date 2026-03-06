@@ -1,7 +1,7 @@
 import { getApiUrl } from '@/config/api';
 import CustomQuoteClient from './CustomQuoteClient';
 
-const CustomQuote = async () => {
+const CustomQuote = async ({ content, locale = "en" }) => {
   let formOptions = {
     services: [],
     propertyType: [],
@@ -16,6 +16,7 @@ const CustomQuote = async () => {
       cache: 'no-store',
       headers: {
         'Content-Type': 'application/json',
+        'Accept-Language': locale,
       },
     });
 
@@ -38,7 +39,7 @@ const CustomQuote = async () => {
     error = err.message || 'Failed to load quote form. Please try again later.';
   }
 
-  return <CustomQuoteClient formOptions={formOptions} error={error} />;
+  return <CustomQuoteClient formOptions={formOptions} error={error} content={content} locale={locale} />;
 };
 
 export default CustomQuote;

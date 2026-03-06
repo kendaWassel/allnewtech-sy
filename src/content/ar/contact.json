@@ -1,0 +1,177 @@
+{
+  "hero": {
+    "title": "تواصل معنا",
+    "subtitle": "اتصل بنا للحصول على استشارة مجانية أو حجز زيارة ميدانية"
+  },
+  "siteVisit": {
+    "title": "معلومات التواصل",
+    "intro": "قم بحجز تقييم ميداني احترافي مع أحد مختصينا.",
+    "fields": {
+      "contactInfo": {
+        "title": "معلومات التواصل",
+        "fields": [
+          {
+            "name": "firstName",
+            "label": "الاسم الأول",
+            "type": "text"
+          },
+          {
+            "name": "lastName",
+            "label": "اسم العائلة",
+            "type": "text"
+          },
+          {
+            "name": "email",
+            "label": "البريد الإلكتروني",
+            "type": "email"
+          },
+          {
+            "name": "phone",
+            "label": "رقم الهاتف",
+            "type": "tel"
+          }
+        ]
+      },
+      "siteDetails": {
+        "title": "تفاصيل الموقع",
+        "fields": [
+          {
+            "name": "propertyType",
+            "label": "نوع العقار",
+            "type": "select"
+          },
+          {
+            "name": "postcode",
+            "label": "الرمز البريدي",
+            "type": "text"
+          },
+          {
+            "name": "address",
+            "label": "العنوان",
+            "type": "text"
+          }
+        ]
+      },
+      "services": {
+        "title": "اختر الخدمات",
+        "name": "services",
+        "type": "checkbox"
+      },
+      "timing": {
+        "title": "الوقت المفضل للزيارة",
+        "fields": [
+          {
+            "name": "preferredDate",
+            "label": "التاريخ المفضل",
+            "type": "date"
+          },
+          {
+            "name": "preferredTime",
+            "label": "الوقت المفضل",
+            "type": "select"
+          }
+        ]
+      },
+      "additional": {
+        "title": "معلومات إضافية",
+        "fields": [
+          {
+            "name": "notes",
+            "label": "ملاحظات / تعليمات خاصة",
+            "type": "textarea",
+            "placeholder": "مثال: تعليمات الوصول، معلومات مواقف السيارات، أوقات الدوام."
+          }
+        ]
+      },
+      "consent": {
+        "name": "privacyConsent",
+        "label": "أوافق على سياسة الخصوصية وأوافق على التواصل معي.",
+        "type": "checkbox"
+      },
+      "submit": {
+        "text": "حجز زيارة ميدانية"
+      }
+    }
+  },
+  "quoteRequest": {
+    "title": "معلومات التواصل",
+    "intro": "أخبرنا بمتطلباتك وسيقوم فريقنا بتقديم عرض سعر مخصص.",
+    "fields": {
+      "contactInfo": {
+        "fields": [
+          {
+            "name": "firstName",
+            "label": "الاسم الأول",
+            "type": "text"
+          },
+          {
+            "name": "lastName",
+            "label": "اسم العائلة",
+            "type": "text"
+          },
+          {
+            "name": "email",
+            "label": "البريد الإلكتروني",
+            "type": "email"
+          },
+          {
+            "name": "phone",
+            "label": "رقم الهاتف",
+            "type": "tel"
+          }
+        ]
+      },
+      "siteDetails": {
+        "title": "تفاصيل الموقع",
+        "fields": [
+          {
+            "name": "propertyType",
+            "label": "نوع العقار",
+            "type": "select"
+          },
+          {
+            "name": "postcode",
+            "label": "الرمز البريدي",
+            "type": "text"
+          }
+        ]
+      },
+      "services": {
+        "title": "اختر الخدمات",
+        "name": "services",
+        "type": "checkbox"
+      },
+      "additional": {
+        "fields": [
+          {
+            "name": "message",
+            "type": "textarea",
+            "placeholder": "يرجى وصف متطلباتك أو استفساراتك بإيجاز…"
+          },
+          {
+            "name": "budgetRange",
+            "label": "الميزانية المتوقعة",
+            "type": "select"
+          },
+          {
+            "name": "preferredContact",
+            "label": "طريقة التواصل المفضلة",
+            "type": "select"
+          },
+          {
+            "name": "fileUpload",
+            "type": "file"
+          }
+        ]
+      },
+      "consent": {
+        "name": "privacyConsent",
+        "label": "أوافق على سياسة الخصوصية وأوافق على التواصل معي.",
+        "type": "checkbox"
+      },
+      "submit": {
+        "text": "طلب عرض سعر"
+      }
+    }
+  }
+}

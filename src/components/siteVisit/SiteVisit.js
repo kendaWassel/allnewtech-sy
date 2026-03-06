@@ -1,7 +1,7 @@
 import { apiConfig, getApiUrl } from '@/config/api';
 import SiteVisitClient from './SiteVisitClient';
 
-const SiteVisit = async () => {
+const SiteVisit = async ({ content, locale = "en" }) => {
   let formOptions = {
     services: [],
     propertyType: [],
@@ -15,6 +15,7 @@ const SiteVisit = async () => {
       cache: 'no-store',
       headers: {
         'Content-Type': 'application/json',
+        'Accept-Language': locale,
       },
     });
 
@@ -38,7 +39,7 @@ const SiteVisit = async () => {
     error = err.message || 'Failed to load site visit form. Please try again later.';
   }
 
-  return <SiteVisitClient formOptions={formOptions} error={error} />;
+  return <SiteVisitClient formOptions={formOptions} error={error} content={content} locale={locale} />;
 };
 
 export default SiteVisit;

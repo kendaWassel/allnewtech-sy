@@ -1,7 +1,7 @@
-import { getApiUrl, apiConfig } from '@/config/api';
+import { getApiUrl, apiConfig} from '@/config/api';
 import ContactFormClient from './ContactFormClient';
 
-const ContactForm = async () => {
+const ContactForm = async ({ content, locale = "en" }) => {
   let services = [];
   let propertyTypes = [];
   let locations = [];
@@ -9,7 +9,12 @@ const ContactForm = async () => {
 
   try {
     const [formRes, locationsRes] = await Promise.all([
-      fetch(getApiUrl(apiConfig.endpoints.contactForm), { cache: 'no-store' }),
+      fetch(getApiUrl(apiConfig.endpoints.contactForm), {
+        cache: 'no-store',
+        headers: {
+          'Accept-Language': locale,
+        },
+      }),
       fetch(getApiUrl(apiConfig.endpoints.locations), { cache: 'no-store' }),
     ]);
 
@@ -37,6 +42,8 @@ const ContactForm = async () => {
       propertyTypes={propertyTypes}
       locations={locations}
       error={error}
+      content={content}
+      locale={locale}
     />
   );
 };

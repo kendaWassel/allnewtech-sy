@@ -1,7 +1,7 @@
 import { apiConfig, getApiUrl, getImageUrl } from '@/config/api';
 import TestimonialsCarousel from './TestimonialsCarousel';
 
-const Testimonials = async () => {
+const Testimonials = async ({ locale = "en" }) => {
   let testimonials = [];
   let error = null;
 
@@ -11,6 +11,7 @@ const Testimonials = async () => {
       next: { revalidate: 60 },
       headers: {
         'Content-Type': 'application/json',
+        'Accept-Language': locale,
       },
     });
 

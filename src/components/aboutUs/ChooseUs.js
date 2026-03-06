@@ -1,18 +1,15 @@
 import Image from 'next/image';
-import about from '@/content/about';
 import ChooseUsReason from '../ui/ChooseUsReason';
-const ChooseUs = () => {
-  const { title, points } = about.whyChooseUs;
+const ChooseUs = ({content,locale}) => {
+  const { title, points } = content;
 
-  // Map points by title so we can control layout order
   const byTitle = (t) => points.find((p) => p.title === t) || { title: t, description: '' };
 
-  const aftercare = byTitle('Aftercare Support');
-  const experienced = byTitle('Experienced Technicians');
-  const products = byTitle('High-Quality Products');
-  const tailored = byTitle('Tailored Solutions');
+  const aftercare = locale === 'ar' ? byTitle('دعم ما بعد التركيب') : byTitle('Aftercare Support');
+  const experienced = locale === 'ar' ? byTitle('فنيون ذوو خبرة') : byTitle('Experienced Technicians');
+  const products = locale === 'ar' ? byTitle('منتجات عالية الجودة') : byTitle('High-Quality Products');
+  const tailored = locale === 'ar' ? byTitle('حلول مخصصة') : byTitle('Tailored Solutions');
 
-  // Mobile order (top to bottom) as in second reference
   const mobileItems = [aftercare, experienced, tailored, products];
 
   return (

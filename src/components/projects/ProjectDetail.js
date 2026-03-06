@@ -1,7 +1,7 @@
 import { apiConfig, getApiUrl, getImageUrl } from '@/config/api';
 import ProjectDetailClient from './ProjectDetailClient';
 
-const ProjectDetail = async ({ projectId }) => {
+const ProjectDetail = async ({ projectId, locale = "en" }) => {
   let project = null;
 
   try {
@@ -10,6 +10,7 @@ const ProjectDetail = async ({ projectId }) => {
       next: { revalidate: 60 },
       headers: {
         'Content-Type': 'application/json',
+        'Accept-Language': locale,
       },
     });
 
@@ -32,8 +33,8 @@ const ProjectDetail = async ({ projectId }) => {
       description: data.data.description || '',
       service: data.data.service || '',
       propertyType: data.data.property_type || '',
-      challenges: data.data.challenges?.map((c) => c.item) || [],
-      solutions: data.data.solutions?.map((s) => s.item) || [],
+      challenges: data.data.challenges || [],
+      solutions: data.data.solutions || [],
       mainImage: getImageUrl(main),
       secondaryImages: secondary.map(getImageUrl).filter(Boolean),
       otherImages: other.map(getImageUrl).filter(Boolean),

@@ -1,0 +1,54 @@
+{
+  "nav": [
+    {
+      "label": "من نحن",
+      "href": "/about"
+    },
+    {
+      "label": "الخدمات",
+      "href": "/services",
+      "hasDropdown": true
+    },
+    {
+      "label": "المشاريع",
+      "href": "/projects"
+    },
+    {
+      "label": "اتصل بنا",
+      "href": "/contact-us"
+    }
+  ],
+  "servicesDropdown": {
+    "homeLabel": "الخدمات المنزلية",
+    "homeHref": "/services/home-solutions",
+    "commercialLabel": "الخدمات التجارية",
+    "commercialHref": "/services/commercial-solutions"
+  },
+  "mobileNav": [
+    {
+      "label": "الرئيسية",
+      "href": "/"
+    },
+    {
+      "label": "من نحن",
+      "href": "/about"
+    },
+    {
+      "label": "الخدمات",
+      "href": "/services"
+    },
+    {
+      "label": "المشاريع",
+      "href": "/projects"
+    },
+    {
+      "label": "اتصل بنا",
+      "href": "/contact-us"
+    }
+  ],
+  "languageSwitch": {
+    "toEnglish": "التحويل إلى الإنجليزية",
+    "toArabic": "التحويل إلى العربية"
+  },
+  "phoneAriaPrefix": "اتصل بنا على"
+}

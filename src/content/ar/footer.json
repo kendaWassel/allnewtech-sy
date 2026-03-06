@@ -1,0 +1,63 @@
+{
+  "company": {
+    "locationLabel": "الموقع",
+    "addressLine1": "location",
+    "addressLine2": "location",
+    "phone": "+999999999999",
+    "email": "info@allnewtech.co.sy"
+  },
+  "sections": [
+    {
+      "title": "الخدمات",
+      "links": [
+        {
+          "label": "الخدمات المنزلية",
+          "href": "/services/home-solutions"
+        },
+        {
+          "label": "الخدمات التجارية",
+          "href": "/services/commercial-solutions"
+        }
+      ]
+    },
+    {
+      "title": "ابدأ مشروعك اليوم",
+      "links": [
+        {
+          "label": "طلب زيارة ميدانية",
+          "href": "/contact-us"
+        },
+        {
+          "label": "احصل على عرض سعر مخصص",
+          "href": "/custom-quote"
+        }
+      ]
+    },
+    {
+      "title": "روابط مفيدة",
+      "links": [
+        {
+          "label": "الرئيسية",
+          "href": "/"
+        },
+        {
+          "label": "الخدمات",
+          "href": "/services"
+        },
+        {
+          "label": "المشاريع",
+          "href": "/projects"
+        },
+        {
+          "label": "اتصل بنا",
+          "href": "/contact-us"
+        },
+        {
+          "label": "من نحن",
+          "href": "/about"
+        }
+      ]
+    }
+  ],
+  "copyright": "©2026 All New Tech، جميع الحقوق محفوظة"
+}

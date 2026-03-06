@@ -1,10 +1,17 @@
-import services from '@/content/services'
+import fallbackServices from '@/content/services'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const Categories = () => {
-  const { title, description, items } = services.categories
+const Categories = ({ content, locale = "en" }) => {
+  const categories = content || fallbackServices.categories
+  const { title, description, items = [] } = categories || {}
   const images = ['/services/category-1.jpg', '/services/category-2.jpg']
+  const withLocale = (link = "") => {
+    const normalizedLink = link.startsWith("/") ? link.slice(1) : link
+    return `/${locale}/${normalizedLink}`
+  }
+
+  if (!categories) return null
 
   return (
     <section className="py-[3.5rem] md:py-[5rem]">
@@ -18,12 +25,12 @@ const Categories = () => {
       </div>
 
       <div className="mx-auto mt-[3rem] w-full px-[3.75rem] md:px-[var(--inline-padding)]">
-        <div className="flex flex-col md:gap-[2rem] gap-[3rem] lg:flex-row">
+        <div className="flex flex-col md:gap-[2rem] gap-[3rem] lg:flex-row ">
           {items.map((item, index) => (
             <Link
               key={item.title}
-              href={item.link}
-              className="flex-1 overflow-hidden shadow-[0_18px_45px_rgba(0,0,0,0.12)] transition-transform duration-300 md:hover:-translate-y-1"
+              href={withLocale(item.link)}
+              className="rounded-[24px] flex-1 overflow-hidden shadow-[0_18px_45px_rgba(0,0,0,0.12)] transition-transform duration-300 md:hover:-translate-y-1"
             >
               <div className="relative h-[9.5rem] w-full md:h-[20.5rem]">
                 <Image

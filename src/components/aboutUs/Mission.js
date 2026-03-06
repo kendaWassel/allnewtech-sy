@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import aboutUs from '@/content/about'
-const Mission = () => {
-    const mission = aboutUs.mission;
+const Mission = ({content}) => {
+    const mission = content;
     return (
         <section className="md:px-[var(--inline-padding)] px-[var(--small-padding)] lg:pt-[2.5rem] pt-[4rem] mb-[6rem]">
             <div className="flex lg:flex-row flex-col items-center gap-[7.5rem]">

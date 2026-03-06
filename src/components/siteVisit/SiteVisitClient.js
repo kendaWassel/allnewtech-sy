@@ -1,45 +1,7 @@
 "use client";
 import { useState } from "react";
 import { apiConfig, getApiUrl } from "@/config/api";
-import contact from "@/content/contact.json";
-
-const siteVisit = contact.siteVisit;
-const fields = siteVisit.fields;
-const contactInfo = fields.contactInfo;
-const siteDetails = fields.siteDetails;
-const services = fields.services;
-const timing = fields.timing;
-const additional = fields.additional;
-const consent = fields.consent;
-const submit = fields.submit;
-
-const firstNameLabel = contactInfo.fields.find(
-  (field) => field.name === "firstName",
-)?.label;
-const lastNameLabel = contactInfo.fields.find(
-  (field) => field.name === "lastName",
-)?.label;
-const emailLabel = contactInfo.fields.find(
-  (field) => field.name === "email",
-)?.label;
-const phoneLabel = contactInfo.fields.find(
-  (field) => field.name === "phone",
-)?.label;
-const propertyTypeLabel = siteDetails.fields.find(
-  (field) => field.name === "propertyType",
-)?.label;
-const addressLabel = siteDetails.fields.find(
-  (field) => field.name === "address",
-)?.label;
-const preferredDateLabel = timing.fields.find(
-  (field) => field.name === "preferredDate",
-)?.label;
-const preferredTimeLabel = timing.fields.find(
-  (field) => field.name === "preferredTime",
-)?.label;
-const notesPlaceholder = additional.fields.find(
-  (field) => field.name === "notes",
-)?.label;
+import fallbackContact from "@/content/contact";
 
 const validateSiteVisitForm = (formData) => {
   if (!formData.firstName.trim()) return "First name is required.";
@@ -79,7 +41,30 @@ const SiteVisitClient = ({
     preferredTime: [],
   },
   error = null,
+  content = null,
 }) => {
+  const contact = content || fallbackContact;
+  const siteVisit = contact?.siteVisit || {};
+  const fields = siteVisit?.fields || {};
+  const contactInfo = fields?.contactInfo || {};
+  const siteDetails = fields?.siteDetails || {};
+  const services = fields?.services || {};
+  const timing = fields?.timing || {};
+  const additional = fields?.additional || {};
+  const consent = fields?.consent || {};
+  const submit = fields?.submit || {};
+
+  const firstNameLabel = contactInfo?.fields?.find((field) => field.name === "firstName")?.label;
+  const lastNameLabel = contactInfo?.fields?.find((field) => field.name === "lastName")?.label;
+  const emailLabel = contactInfo?.fields?.find((field) => field.name === "email")?.label;
+  const phoneLabel = contactInfo?.fields?.find((field) => field.name === "phone")?.label;
+  const propertyTypeLabel = siteDetails?.fields?.find((field) => field.name === "propertyType")?.label;
+  const postCodeLabel = siteDetails?.fields?.find((field) => field.name === "postcode")?.label;
+  const addressLabel = siteDetails?.fields?.find((field) => field.name === "address")?.label;
+  const preferredDateLabel = timing?.fields?.find((field) => field.name === "preferredDate")?.label;
+  const preferredTimeLabel = timing?.fields?.find((field) => field.name === "preferredTime")?.label;
+  const notesPlaceholder = additional?.fields?.find((field) => field.name === "notes")?.label;
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -289,7 +274,7 @@ const SiteVisitClient = ({
               <input
                 type="text"
                 name="postCode"
-                placeholder="Post Code"
+                placeholder={postCodeLabel || "Post Code"}
                 value={formData.postCode}
                 onChange={handleChange}
                 className="w-full placeholder:text-black border-none outline-none text-[0.6rem] md:text-base"

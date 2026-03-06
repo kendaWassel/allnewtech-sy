@@ -4,7 +4,10 @@ import { useMemo, useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import CTAButton from '../ui/CTAButton';
 
-const ProjectsClient = ({ projects = [], services = [] }) => {
+const ProjectsClient = ({ projects = [], services = [], content = null, locale = "en" }) => {
+  const allProjectsLabel = content?.filters?.all || "All Projects";
+  const serviceLabel = content?.filters?.service || "Service";
+  const readMoreLabel = content?.filters?.readMore || "Read More";
   const [activeFilter, setActiveFilter] = useState('all');
   const [selectedServices, setSelectedServices] = useState([]);
   const [serviceMenuOpen, setServiceMenuOpen] = useState(false);
@@ -61,7 +64,7 @@ const ProjectsClient = ({ projects = [], services = [] }) => {
             onClick={clearFilters}
             className={`px-[1.25rem] py-[0.25rem] md:px-[2rem] md:py-[0.5rem] text-[0.75rem] md:text-2xl transition-colors bg-[var(--secondary)] text-white`}
           >
-            All Projects
+            {allProjectsLabel}
           </button>
           <div className="relative" ref={dropdownRef}>
             <button
@@ -70,9 +73,9 @@ const ProjectsClient = ({ projects = [], services = [] }) => {
                 setActiveFilter('service');
                 setServiceMenuOpen((open) => !open);
               }}
-              className={`flex items-center gap-2 px-[2rem] py-[0.25rem] md:px-[3.75rem] md:py-[0.5rem] text-[0.75rem] md:text-2xl transition-colors bg-[var(--secondary)] text-white`}
-            >
-              <span>Service</span>
+            className={`flex items-center gap-2 px-[2rem] py-[0.25rem] md:px-[3.75rem] md:py-[0.5rem] text-[0.75rem] md:text-2xl transition-colors bg-[var(--secondary)] text-white`}
+          >
+              <span>{serviceLabel}</span>
               {selectedServices.length > 0 && (
                 <span className="absolute top-[-10px] right-[-10px] bg-[var(--primary-blue-first)] inline-flex items-center justify-center rounded-full px-2 py-[2px] text-[0.65rem] md:text-[0.7rem]">
                   {selectedServices.length}
@@ -181,7 +184,7 @@ const ProjectsClient = ({ projects = [], services = [] }) => {
                     </div>
 
                     <div className="mt-auto flex justify-end">
-                      <CTAButton title="Read More" link={`/projects/${project.id}`} color="blue" className="mr-[0.75rem] mb-[0.75rem] text-xs md:text-base !py-[2px] !px-[4px] md:!py-[0.5rem] md:!px-[1.5rem]"/>
+                      <CTAButton title={readMoreLabel} link={`/${locale}/projects/${project.id}`} color="blue" className="mr-[0.75rem] mb-[0.75rem] text-xs md:text-base !py-[2px] !px-[4px] md:!py-[0.5rem] md:!px-[1.5rem]"/>
                     </div>
                   </div>
                 </article>

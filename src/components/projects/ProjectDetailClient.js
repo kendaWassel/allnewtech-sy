@@ -4,7 +4,8 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import Image from "next/image";
 
 const ProjectDetailClient = ({ project }) => {
-  // displaySet: [main, thumb0, thumb1, thumb2] — main image + row of thumbnails; swap on click
+  console.log('project in client:', project);
+  // displaySet: [main, thumb0, thumb1, thumb2] — main image + row of thumbnails, swap on click
   const initialDisplaySet = useMemo(
     () =>
       [

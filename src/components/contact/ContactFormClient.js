@@ -26,6 +26,7 @@ const ContactMap = dynamic(() => import('./ContactMap'), {
 });
 
 const ContactFormFields = ({
+  title = "Contact Us",
   formData,
   services,
   propertyTypes,
@@ -35,7 +36,7 @@ const ContactFormFields = ({
 }) => (
   <form onSubmit={handleSubmit} className="mx-auto lg:px-0 px-[2.25rem]">
     <h1 className="font-bold text-2xl lg:text-[2rem] mb-[1.5rem] lg:mb-[2.5rem] text-center">
-      Contact Us
+      {title}
     </h1>
     <div className="flex mb-[1.5rem] gap-[1.25rem] md:gap-[2rem]">
       <div className="flex-1 bg-[#F3F3F3] shadow-[0px_2px_6px_#00000021] px-[1rem] py-[0.75rem]">
@@ -169,7 +170,8 @@ const MapBlock = ({ locations = [] }) => (
   </div>
 );
 
-const ContactFormClient = ({ services = [], propertyTypes = [], locations = [], error = null }) => {
+const ContactFormClient = ({ services = [], propertyTypes = [], locations = [], error = null, content = null }) => {
+  const formTitle = content?.hero?.title || "Contact Us";
   const isLargeScreen = useIsLargeScreen();
   const [formData, setFormData] = useState({
     firstName: '',
@@ -309,6 +311,7 @@ const ContactFormClient = ({ services = [], propertyTypes = [], locations = [], 
         </div>
         <div className="w-1/2 lg:px-0 px-[2.25rem]">
           <ContactFormFields
+            title={formTitle}
             formData={formData}
             services={services}
             propertyTypes={propertyTypes}
@@ -331,6 +334,7 @@ const ContactFormClient = ({ services = [], propertyTypes = [], locations = [], 
         </div>
         <div className="w-full">
           <ContactFormFields
+            title={formTitle}
             formData={formData}
             services={services}
             propertyTypes={propertyTypes}

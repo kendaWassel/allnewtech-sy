@@ -1,0 +1,63 @@
+{
+  "company": {
+    "locationLabel": "Location",
+    "addressLine1": "location",
+    "addressLine2": "location",
+    "phone": "+999999999999",
+    "email": "info@allnewtech.co.sy"
+  },
+  "sections": [
+    {
+      "title": "Services",
+      "links": [
+        {
+          "label": "Home Services",
+          "href": "/services/home-solutions"
+        },
+        {
+          "label": "Commercial Services",
+          "href": "/services/commercial-solutions"
+        }
+      ]
+    },
+    {
+      "title": "Start Your Project Today",
+      "links": [
+        {
+          "label": "Request a Site Survey",
+          "href": "/contact-us"
+        },
+        {
+          "label": "Get a Free Custom Quote",
+          "href": "/custom-quote"
+        }
+      ]
+    },
+    {
+      "title": "Useful Links",
+      "links": [
+        {
+          "label": "Home",
+          "href": "/"
+        },
+        {
+          "label": "Services",
+          "href": "/services"
+        },
+        {
+          "label": "Projects",
+          "href": "/projects"
+        },
+        {
+          "label": "Contact Us",
+          "href": "/contact-us"
+        },
+        {
+          "label": "About Us",
+          "href": "/about"
+        }
+      ]
+    }
+  ],
+  "copyright": "©2026 All New Tech, all rights reserved"
+}

@@ -1,62 +1,97 @@
-import home from '@/content/homepage';
-import Image from 'next/image';
+import Image from "next/image";
 
-const HowItWorks = () => {
-  const steps = home.howItWorks.steps;
+const HowItWorks = ({ content}) => {
+  if (!content) return null;
+
+  const steps = content.steps;
+  const stepLabel = content.stepLabel;
 
   return (
-    <section className="py-[3rem]">
-      <h2 className="font-bold md:ps-[var(--inline-padding)] md:text-start text-center text-2xl lg:text-5xl mb-[2rem]">
-        {home.howItWorks.title}
+    <section className="py-[3rem] md:py-[16rem]">
+      <h2 className="md:hidden mb-[2rem] text-center text-2xl font-bold lg:text-5xl">
+        {content.title}
       </h2>
+      <div className="px-[var(--small-padding)] md:px-[var(--inline-padding)]">
+        <div className="md:hidden">
+          {steps.map((step, index) => {
+            const widthPercentage = Number.parseInt(step.number, 10) * 20;
 
-      <div className="md:ps-[var(--inline-padding)] px-[var(--small-padding)]">
-        {steps.map((step, index) => {
-          const widthPercentage = parseInt(step.number) * 20;
+            return (
+              <div
+                key={`${step.number}-${index}`}
+                className="mb-[3rem] flex flex-col gap-[1.5rem] last:mb-0"
+              >
+                <div className="relative w-full px-[0.5rem]">
+                  <div className="relative aspect-[16/9] w-full overflow-hidden">
+                    <Image
+                      src={`/home/step-${step.number}.svg`}
+                      alt={step.title}
+                      fill
+                      className="object-cover"
+                      sizes="100vw"
+                    />
+                  </div>
 
-          return (
-            <div
-              key={index}
-              className="flex flex-col md:flex-row md:items-center gap-[1.5rem] lg:gap-[6rem] lg:mb-[8rem] mb-[3rem]"
-            >
-              <div className="relative w-full md:w-[37%] md:px-0 px-[0.5rem]">
-                {/* Image */}
-                <div className="relative aspect-[16/9] w-full overflow-hidden">
-                  <Image
-                    src={`/home/step-${step.number}.svg`}
-                    alt={step.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 482px) 100vw, 45vw"
+                  <span
+                    className="block h-[9px] bg-[var(--secondary)]"
+                    style={{ width: `${widthPercentage}%` }}
                   />
                 </div>
 
-                {/* Line under image - mobile */}
-                <span
-                  className="block md:hidden h-[9px] bg-[var(--secondary)]"
-                  style={{ width: `${widthPercentage}%` }}
-                />
-
-                {/* Line on the right - desktop */}
-                <span
-                  className="hidden md:block absolute top-0 left-full ml-[1.5rem] lg:ml-[6rem] lg:h-[18px] h-[9px] bg-[var(--secondary)]"
-                  style={{ width: `${widthPercentage}%` }}
-                />
+                <div className="text-start">
+                  <h4 className="mb-[1rem] text-2xl font-bold">
+                    {stepLabel} {step.number}: {step.title}
+                  </h4>
+                  <p className="max-w-[90%]">{step.description}</p>
+                </div>
               </div>
+            );
+          })}
+        </div>
+        <div className="relative mx-auto hidden max-w-[1200px] px-[3rem] md:block">
+          <span className="pointer-events-none absolute top-[1rem] bottom-0 left-1/2 w-[3px] -translate-x-1/2 bg-black" />
+          <div className="space-y-[4.5rem]">
+            {steps.map((step, index) => {
+              const isRight = index % 2 === 0;
+              return (
+                <div key={`${step.number}-${index}`} className="group relative md:flex">
+                  <span
+                    className={`absolute z-11 top-[1rem] h-[3px] bg-[var(--secondary)] ${isRight ? "start-1/2 w-[3.5rem]" : "end-1/2 w-[3.5rem]"}`}
+                  />
+                  <div className="hidden md:group-first:block relative w-1/2 mt-[1.5rem] h-[fit-content]">
+                    <h2 className="text-center font-bold text-2xl lg:text-4xl xl:text-5xl text-white relative z-2">
+                      {content.title}
+                    </h2>
+                    <Image src='/home/how-it-works.svg' alt="blue shape" width={100} height={100} className="absolute top-1/2 -translate-y-1/2 z-1 w-[95%] start-[-1rem]"/>
+                  </div>
+                  <div
+                    className={`relative w-full md:w-1/2 after:absolute after:bg-[var(--secondary)] after:w-[1rem] after:h-[1rem] after:top-[0.55rem] after:rounded-full ${isRight ? "md:ms-[auto] md:ps-[5rem] after:start-[3rem]" : "md:pe-[3.5rem] after:end-[3rem]"} group-last:before:absolute group-last:before:top-[calc(1rem_+_3px)] group-last:before:h-full group-last:before:w-[2rem] group-last:before:start-[-0.5rem] group-last:before:bg-white group-last:before:z-10`}
+                  >
+                    <h4 className="text-[2rem] leading-tight font-bold">
+                      <span>
+                        {stepLabel} {step.number}: {step.title}
+                      </span>
+                    </h4>
 
+                    <p className="my-[1.5rem] max-w-[32rem] text-2xl leading-[1.35] ">
+                      {step.description}
+                    </p>
 
-              {/* Text */}
-              <div className="flex-1">
-                <h4 className="font-bold xl:mb-[1.5rem] md:mb-[0.5rem] mb-[1rem] text-2xl md:text-xl lg:text-2xl xl:text-[2rem]">
-                  Step {step.number}: {step.title}
-                </h4>
-                <p className="xl:text-2xl lg:text-xl md:max-w-[70%] max-w-[90%]">
-                  {step.description}
-                </p>
-              </div>
-            </div>
-          );
-        })}
+                    <div className="relative aspect-[16/8] w-full overflow-hidden rounded-[24px] shadow-[0_12px_22px_#00000038]">
+                      <Image
+                        src={`/home/step-${step.number}.svg`}
+                        alt={step.title}
+                        fill
+                        className="object-cover"
+                        sizes="42vw"
+                      />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </section>
   );

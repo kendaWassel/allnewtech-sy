@@ -1,17 +1,25 @@
 @import "tailwindcss";
 
 :root {
-  --primary-blue-first: #00B2E3;
+  --primary-blue-first: #00B2E3E3;
   --primary-blue-second: #0075c9;
   --secondary: #1d252c;
   --white: #dde0e3;
   --yellow: #FBE53D;
   --inline-padding: 6rem;
   --small-padding: 1.25rem;
+  --ar-radius: 12px;
 }
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+}
+html[dir="rtl"] {
+  direction: rtl;
+}
+
+html[dir="ltr"] {
+  direction: ltr;
 }
 
 .swiper-button-next,

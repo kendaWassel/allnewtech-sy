@@ -1,8 +1,8 @@
-import CTAButton from "../ui/CTAButton"
-import Image from "next/image"
+import CTAButton from "../ui/CTAButton";
+import Image from "next/image";
 import { apiConfig, getApiUrl, getImageUrl } from '@/config/api';
 
-const LatestNews = async () => {
+const LatestNews = async ({ content, locale = "en" }) => {
     let news = [];
     let error = null;
 
@@ -12,6 +12,7 @@ const LatestNews = async () => {
             next: { revalidate: 60 },
             headers: {
                 'Content-Type': 'application/json',
+                'Accept-Language': locale,
             },
         });
 
@@ -38,7 +39,7 @@ const LatestNews = async () => {
                 cta: "Read More",
                 src: getImageUrl(item.image || ''),
                 imageAlt: item.title || 'News article image',
-                link: `/latest-news/${item.id}`,
+                link: `/${locale}/latest-news/${item.id}`,
                 createdAt: item.created_at,
                 updatedAt: item.updated_at,
             };
@@ -50,8 +51,8 @@ const LatestNews = async () => {
 
     return (
         <section className="lg:px-[var(--inline-padding)] px-[var(--small-padding)] lg:py-[5rem] py-[5rem]">
-            <h2 className="font-bold lg:text-5xl text-2xl lg:text-start text-center">Latest News</h2>
-            <div className="lg:border-l-[4px] lg:border-[var(--secondary)] lg:mt-[3rem] mt-[1rem] lg:ms-[3rem] lg:ps-[4.5rem] lg:py-[1rem]">
+            <h2 className="font-bold lg:text-5xl text-2xl lg:text-start text-center">{content?.title ?? "Latest News"}</h2>
+            <div className="lg:border-s-[4px] lg:border-[var(--secondary)] lg:mt-[3rem] mt-[1rem] lg:ms-[3rem] lg:ps-[4.5rem] lg:py-[1rem]">
                 {error ? (
                     <div className="flex items-center justify-center py-8">
                         <div className="text-center">
@@ -71,8 +72,8 @@ const LatestNews = async () => {
                     </div>
                 ) : (
                     news.map((item) => (
-                    <div key={item.id} className="flex lg:flex-row flex-col lg:items-start items-center lg:gap-[3rem] gap-[1rem] lg:mb-[3rem] mb-[1rem]">
-                        <div className="flex-4 lg:order-1 order-2 flex flex-col lg:items-start items-center lg:text-start text-center lg:pt-[1rem]">
+                    <div key={item.id} className="flex lg:flex-row flex-col lg:items-start items-center lg:gap-[3rem] gap-[1rem] lg:mb-[3rem] mb-[1rem] text-start">
+                        <div className="flex-4 lg:order-1 order-2 flex flex-col lg:items-start items-center text-center lg:text-start lg:pt-[1rem]">
                             <h4 className="font-bold lg:text-2xl lg:px-0 px-[3rem]">{item.title}</h4>
                             <p className="lg:text-2xl my-[1rem] lg:w-[90%] lg:px-0 px-[var(--small-padding)] leading-[1.2]">{item.description}</p>
                             <CTAButton title={item.cta} link={item.link} color="blue" className="lg:text-[1rem] text-[0.75rem]" />

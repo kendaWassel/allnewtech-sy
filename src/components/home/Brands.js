@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { apiConfig, getApiUrl, getImageUrl } from '@/config/api';
 
-const Brands = async ({ className = "", companies: providedCompanies = null }) => {
+const Brands = async ({ className = "", companies: providedCompanies = null, locale = "en" }) => {
   let companies = [];
   let error = null;
 
@@ -16,6 +16,7 @@ const Brands = async ({ className = "", companies: providedCompanies = null }) =
         next: { revalidate: 60 },
         headers: {
           'Content-Type': 'application/json',
+          'Accept-Language': locale,
         },
       });
 

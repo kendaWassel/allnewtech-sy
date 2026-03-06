@@ -2,7 +2,7 @@
 import { apiConfig, getApiUrl, getImageUrl } from '@/config/api';
 import AvailableServicesClient from './AvailableServicesClient';
 
-const AvailableServices = async ({ propertyType = 'home' }) => {
+const AvailableServices = async ({ propertyType = 'home', ctaContent, locale = "en" }) => {
   let services = [];
   let error = null;
 
@@ -12,6 +12,7 @@ const AvailableServices = async ({ propertyType = 'home' }) => {
       next: { revalidate: 60 },
       headers: {
         'Content-Type': 'application/json',
+        'Accept-Language': locale,
       },
     });
 
@@ -43,7 +44,15 @@ const AvailableServices = async ({ propertyType = 'home' }) => {
     services = [];
   }
 
-  return <AvailableServicesClient services={services} propertyType={propertyType} error={error} />;
+  return (
+    <AvailableServicesClient
+      services={services}
+      propertyType={propertyType}
+      error={error}
+      ctaContent={ctaContent}
+      locale={locale}
+    />
+  );
 };
 
 export default AvailableServices;

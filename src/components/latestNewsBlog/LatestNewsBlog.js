@@ -1,7 +1,7 @@
 import { apiConfig, getApiUrl } from '@/config/api';
 import LatestNewsBlogClient from './LatestNewsBlogClient';
 
-const LatestNewsBlog = async ({ newsId }) => {
+const LatestNewsBlog = async ({ newsId, locale = "en" }) => {
   let news = null;
 
   try {
@@ -10,6 +10,7 @@ const LatestNewsBlog = async ({ newsId }) => {
       next: { revalidate: 60 },
       headers: {
         'Content-Type': 'application/json',
+        'Accept-Language': locale,
       },
     });
 

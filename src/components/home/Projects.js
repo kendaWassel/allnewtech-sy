@@ -1,9 +1,8 @@
-import home from '@/content/homepage';
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from "next/image";
+import Link from "next/link";
 import { apiConfig, getApiUrl, getImageUrl } from '@/config/api';
 
-const Projects = async () => {
+const Projects = async ({ content, locale = "en" }) => {
   let projects = [];
   let error = null;
 
@@ -41,7 +40,7 @@ const Projects = async () => {
   return (
     <section className="py-[1.5rem] md:py-[3rem]">
       <h2 className="font-bold lg:ps-[var(--inline-padding)] lg:text-start text-center text-2xl lg:text-5xl mb-[1.5rem] lg:mb-[3rem]">
-        {home.projects.title}
+        {content?.title ?? "Our Projects"}
       </h2>
 
       {/* Images Grid */}
@@ -90,11 +89,11 @@ const Projects = async () => {
       {/* Link */}
       <div className="mx-auto w-fit py-[1.5rem] lg:py-[3rem]">
         <Link
-          href="/projects"
-          className="flex items-center text-lg lg:text-2xl font-bold flex items-center gap-2"
+          href={`/${locale}/projects`}
+          className="flex items-center justify-center gap-2 text-lg lg:text-2xl font-bold"
         >
-          <span>{home.projects.link}</span>
-          <Image src="/icons/arrow-right.svg" alt="right arrow" width={25} height={25}/>
+          <span>{content?.link ?? "Explore Projects"}</span>
+          <Image src="/icons/arrow-right.svg" alt="" width={25} height={25} className="rtl:rotate-180"/>
         </Link>
       </div>
     </section>
