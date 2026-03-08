@@ -41,21 +41,21 @@ const Testimonials = async ({ locale = "en" }) => {
   return (
     <section className="relative lg:py-[8rem] py-[4rem]">
       <h2 className='sr-only'>Testimonials</h2>
-      <div className="relative flex items-center bg-[var(--secondary)] w-full lg:h-[365px] md:h-[250px] h-[187px]">
+      <div className="relative flex items-center w-full h-[187px] md:h-auto bg-[var(--secondary)] md:h-auto md:bg-white">
         {error ? (
           <div className="w-full flex items-center justify-center">
             <div className="text-center">
-              <p className="text-white text-center lg:text-xl md:text-lg text-base px-4 mb-2">
+              <p className="text-white text-center lg:text-xl md:text-lg text-base px-4 mb-2 md:text-[var(--secondary)]">
                 Unable to load testimonials
               </p>
-              <p className="text-white/80 text-center lg:text-lg md:text-base text-sm px-4">
+              <p className="text-white/80 text-center lg:text-lg md:text-base text-sm px-4 md:text-[var(--secondary)] md:opacity-80">
                 Try again!
               </p>
             </div>
           </div>
         ) : testimonials.length === 0 ? (
           <div className="w-full flex items-center justify-center">
-            <p className="text-white text-center lg:text-xl md:text-lg text-base px-4">
+            <p className="text-white text-center lg:text-xl md:text-lg text-base px-4 md:text-[var(--secondary)]">
               No testimonials available at the moment. Check back soon!
             </p>
           </div>

@@ -49,7 +49,7 @@ const HowItWorks = ({ content}) => {
           })}
         </div>
         <div className="relative mx-auto hidden max-w-[1200px] px-[3rem] md:block">
-          <span className="pointer-events-none absolute top-[1rem] bottom-0 left-1/2 w-[3px] -translate-x-1/2 bg-black" />
+          <span className="pointer-events-none absolute top-[1rem] bottom-0 left-1/2 w-[3px] -translate-x-1/2 bg-[var(--secondary)]" />
           <div className="space-y-[4.5rem]">
             {steps.map((step, index) => {
               const isRight = index % 2 === 0;

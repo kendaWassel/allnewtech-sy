@@ -38,8 +38,8 @@ const Projects = async ({ content, locale = "en" }) => {
   }
 
   return (
-    <section className="py-[1.5rem] md:py-[3rem]">
-      <h2 className="font-bold lg:ps-[var(--inline-padding)] lg:text-start text-center text-2xl lg:text-5xl mb-[1.5rem] lg:mb-[3rem]">
+    <section className="py-[1.5rem] md:py-[9rem]">
+      <h2 className="relative z-11 font-bold text-center text-2xl lg:text-5xl mb-[1.5rem] lg:mb-[3rem]">
         {content?.title ?? "Our Projects"}
       </h2>
 
@@ -62,11 +62,11 @@ const Projects = async ({ content, locale = "en" }) => {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-3 gap-2 md:gap-6 bg-[var(--white)]">
+        <div className="relative grid grid-cols-3 gap-2 md:gap-6 bg-[var(--white)]">
           {projects.map((project) => (
             <div
               key={project.id}
-              className="relative aspect-[4/3] w-full overflow-hidden bg-[var(--white)]"
+              className="relative aspect-[7/6] w-full overflow-hidden bg-[var(--white)]"
             >
               {project.main_image ? (
                 <Image
@@ -83,11 +83,13 @@ const Projects = async ({ content, locale = "en" }) => {
               )}
             </div>
           ))}
+          <Image src='/home/top-shape.svg' alt="white top shape" width={100} height={100} className="hidden md:block w-full absolute top-[-60px] lg:top-[-90px] xl:top-[-110px] z-10"/>
+          <Image src='/home/bottom-shape.svg' alt="white bottom shape" width={100} height={100} className="hidden md:block w-full absolute bottom-[-60px] lg:bottom-[-90px] xl:bottom-[-110px] z-10"/>
         </div>
       )}
 
       {/* Link */}
-      <div className="mx-auto w-fit py-[1.5rem] lg:py-[3rem]">
+      <div className="relative mx-auto w-fit py-[1.5rem] z-11">
         <Link
           href={`/${locale}/projects`}
           className="flex items-center justify-center gap-2 text-lg lg:text-2xl font-bold"
@@ -101,3 +103,14 @@ const Projects = async ({ content, locale = "en" }) => {
 };
 
 export default Projects;
+
+// content: var(--tw-content);
+//     position: absolute;
+//     width: 120%;
+//     background-color: aquamarine;
+//     top: -230px;
+//     border-bottom: 300px solid black;
+//     border-radius: 50%;
+//     z-index: 100;
+//     left: 50%;
+//     transform: translateX(-50%);
