@@ -53,18 +53,17 @@
     "description": "Book a free consultation and let our experts design the right solution for your property.",
     "buttons": [
       {
-        "text": "Request a Quote",
-        "link": "/custom-quote"
+        "text": "Request a Free Site Survey",
+        "link": "/site-visit"
       },
       {
-        "text": "Book a Site Visit",
-        "link": "/site-visit"
+        "text": "Get a Custom Quote",
+        "link": "/custom-quote"
       }
     ]
   },
-    "discover": {
+  "discover": {
     "title": "Looking for home solutions?",
-    "button": "Discover Commercial Solutions"
+    "button": "Discover Home Solutions"
   }
 }
-

@@ -1,4 +1,4 @@
-import { apiConfig, getApiUrl, getImageUrl } from '@/config/api';
+import { apiConfig, getImageUrl, fetchFromAPI } from '@/config/api';
 import TestimonialsCarousel from './TestimonialsCarousel';
 
 const Testimonials = async ({ locale = "en" }) => {
@@ -6,37 +6,22 @@ const Testimonials = async ({ locale = "en" }) => {
   let error = null;
 
   try {
-    const url = getApiUrl(apiConfig.endpoints.reviews);
-    const response = await fetch(url, {
-      next: { revalidate: 60 },
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept-Language': locale,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`API request failed: ${response.status} ${response.statusText}`);
-    }
-
-    const data = await response.json();
-    
-    if (!data.success) {
-      throw new Error(data.msg || 'API request was not successful');
-    }
-    
-    testimonials = data.data.map((review) => ({
-      id: review.id,
-      rating: review.rating || 5,
-      text: review.description || '',
-      image: getImageUrl(review.user_image || '') || null,
-      createdAt: review.created_at,
-      updatedAt: review.updated_at,
-    }));
-  } catch (err) {
-    error = err.message || 'Failed to load testimonials. Please try again later.';
-    testimonials = [];
-  }
+  const data = await fetchFromAPI(apiConfig.endpoints.reviews, {
+    next: { revalidate: 60 },
+    headers: { 'Accept-Language': locale },
+  });
+  testimonials = data.data.map((review) => ({
+    id: review.id,
+    rating: review.rating || 5,
+    text: review.description || '',
+    image: getImageUrl(review.user_image || '') || null,
+    createdAt: review.created_at,
+    updatedAt: review.updated_at,
+  }));
+} catch (err) {
+  error = err.message || 'Failed to load testimonials. Please try again later.';
+  testimonials = [];
+}
 
   return (
     <section className="relative lg:py-[8rem] py-[4rem]">
@@ -60,7 +45,19 @@ const Testimonials = async ({ locale = "en" }) => {
             </p>
           </div>
         ) : (
+          <>
+      {/* its for better seo */}
+    <div className="sr-only">
+      {testimonials.map((t) => (
+        <div key={t.id}>
+          <p>{t.text}</p>
+          <span>Rating: {t.rating}/5</span>
+        </div>
+      ))}
+    </div>
+    
           <TestimonialsCarousel testimonials={testimonials} />
+          </>
         )}
       </div>
     </section>

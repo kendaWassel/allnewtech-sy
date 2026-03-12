@@ -3,6 +3,48 @@
     "title": "Get in Touch",
     "subtitle": "Contact us for a free consultation or site visit"
   },
+  "contactForm": {
+    "title": "Contact Us",
+    "fields": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "phone": "Phone",
+      "serviceInterest": "Service Interest",
+      "propertyType": "Property Type",
+      "message": "Message"
+    },
+    "submit": "Submit",
+    "sending": "Sending..."
+  },
+  "messages": {
+    "sending": "Sending...",
+    "loadError": "Unable to load form. Try again!",
+    "emptyForm": "Form data is not available at the moment. Please check back soon!",
+    "contactLoadError": "Unable to load contact form right now. Please try again later.",
+    "errorTitle": "We couldn't send your message",
+    "successTitle": "Thank you for getting in touch",
+    "errorTitleRequest": "We couldn't send your request",
+    "successTitleRequest": "Thank you for your request",
+    "somethingWrong": "Something went wrong. Please try again."
+  },
+  "validation": {
+    "firstNameRequired": "First name is required.",
+    "lastNameRequired": "Last name is required.",
+    "invalidEmail": "Please enter a valid email address.",
+    "invalidPhone": "Please enter a valid phone number.",
+    "postCodeRequired": "Post code is required.",
+    "propertyTypeRequired": "Please select a property type.",
+    "serviceRequired": "Please select at least one service.",
+    "requirementsRequired": "Please add your requirements.",
+    "preferredContactRequired": "Please select a preferred contact method.",
+    "budgetRequired": "Please select a budget range.",
+    "fileRequired": "Please upload a file.",
+    "consentRequired": "Please confirm the consent checkbox.",
+    "addressRequired": "Address is required.",
+    "preferredTimeRequired": "Please select a preferred time.",
+    "invalidDate": "Preferred date must be in YYYY-MM-DD format."
+  },
   "siteVisit": {
     "title": "Contact Information",
     "intro": "Schedule a professional site assessment with one of our specialists.",
@@ -162,6 +204,7 @@
           },
           {
             "name": "fileUpload",
+            "label": "File upload",
             "type": "file"
           }
         ]

@@ -4,10 +4,15 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import ServicesCTA from "./ServicesCTA";
 
-const AvailableServicesClient = ({ services, propertyType = 'home', error = null, ctaContent, locale = "en" }) => {
+const AvailableServicesClient = ({ services, propertyType = 'Home', error = null, ctaContent, locale = "en" }) => {
   const [activeSection, setActiveSection] = useState(0);
   const ctaTitle = ctaContent?.title || "Start Your Project Today";
-
+  const formatStepNumber = (value) => {
+    const digits = String(value).match(/\d+/)?.[0];
+    if (!digits) return value;
+    const localeTag = locale.startsWith("ar") ? "ar-u-nu-arab" : "en";
+    return new Intl.NumberFormat(localeTag).format(Number(digits));
+  };
   useEffect(() => {
     const handleScroll = () => {
       const allSections = [
@@ -109,24 +114,24 @@ const AvailableServicesClient = ({ services, propertyType = 'home', error = null
                 <button
                   key={service.id || index}
                   onClick={() => scrollToSection(index)}
-                  className={`cursor-pointer text-left py-3 transition relative ${
+                  className={`cursor-pointer text-start py-3 transition relative ${
                     activeSection === index
                       ? ""
                       : ""
                   }`}
                 >
-                  <span className={`${activeSection === index ? "border-l-[5px] pl-2" : ""} text-xl font-bold text-[var(--secondary)]`}>{service.title}</span>
+                  <span className={`${activeSection === index ? "border-s-[5px] ps-2" : ""} text-xl font-bold text-[var(--secondary)]`}>{service.title}</span>
                 </button>
               ))}
               <button
                 onClick={scrollToCTA}
-                className={`cursor-pointer text-left py-3 transition-colors mt-4 relative ${
+                className={`cursor-pointer text-start py-3 transition-colors mt-4 relative ${
                   activeSection === services.length
                     ? ""
                     : ""
                 }`}
               >
-                <span className={`${activeSection === services.length ? "border-l-[5px] pl-2" : ""} text-xl font-bold text-[var(--secondary)]`}>{ctaTitle}</span>
+                <span className={`${activeSection === services.length ? "border-s-[5px] ps-2" : ""} text-xl font-bold text-[var(--secondary)]`}>{ctaTitle}</span>
               </button>
             </nav>
           </div>
@@ -139,13 +144,14 @@ const AvailableServicesClient = ({ services, propertyType = 'home', error = null
               id={`service-${index}`} 
               className="scroll-mt-[100px] flex flex-col items-start gap-[3rem] md:gap-[4rem]"
             >
-              <div className="xl:ml-[8rem] md:ml-[4rem] mx-[auto] w-full sm:w-[21.9rem] md:w-[70%] xl:w-[49.2rem] h-[8.6rem] md:h-[12rem] xl:h-[19.2rem] flex-shrink-0">
+              <div className="xl:ms-[8rem] md:ms-[4rem] mx-[auto] w-full sm:w-[21.9rem] md:w-[70%] xl:w-[45.2rem] h-[8.6rem] md:h-[12rem] xl:h-[19.2rem] flex-shrink-0">
                 {service.image ? (
                   <Image
                     src={service.image}
                     alt={service.title}
                     width={308}
                     height={788}
+                    sizes="(min-width: 1280px) 723px, (min-width: 768px) 70vw, (min-width: 640px) 350px, 100vw"
                     className="w-full h-full object-cover"
                   />
                 ) : (
@@ -154,16 +160,18 @@ const AvailableServicesClient = ({ services, propertyType = 'home', error = null
               </div>
 
               <div className="flex-1">
-                <div className="relative flex items-start gap-[1.5rem] md:pl-[6rem] pl-[2.5rem]">
-                  <span className="text-[2rem] md:text-[4rem] font-bold absolute left-0 top-0">#{index + 1}</span>
-                  <div className="flex-1 border-l-[7px] md:border-l-[14px] border-[var(--primary-blue-first)] pl-[1.5rem] ml-[1.5rem]">
+                <div className="relative flex items-start gap-[1.5rem] md:ps-[6rem] ps-[2.5rem]">
+                  <span className="text-[2rem] md:text-[4rem] font-bold absolute start-0 top-0">
+                    #{formatStepNumber(index + 1)}
+                  </span>
+                  <div className="flex-1 border-s-[7px] md:border-s-[14px] border-[var(--primary-blue-first)] ps-[1.5rem] ms-[1.5rem]">
                     <h3 className="text-2xl md:text-[2.5rem] font-bold ">{service.title}</h3>
                     <div className="mt-[0.75rem] w-[90%]">
                     <p className="text-sm md:text-2xl mb-[2rem]">{service.description}</p>
                     <ul className="">
                       {service.features.map((feature, idx) => (
                         <li key={idx} className="text-sm md:text-2xl flex items-start">
-                          <span className="mr-2">•</span>
+                          <span className="me-2">•</span>
                           <span>{feature}</span>
                         </li>
                       ))}

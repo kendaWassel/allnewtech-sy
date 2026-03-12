@@ -1,8 +1,10 @@
 {
   "hero": {
-    "title": "أعمالنا",
+    "title": "مشاريعنا",
     "subtitle": "مشاريع حقيقية. نتائج مثبتة"
   },
+  "readMoreLabel": "اقرأ المزيد",
+  "servicesLabel": "الخدمات",
   "filters": {
     "all": "جميع المشاريع",
     "home": "حلول منزلية",
@@ -11,5 +13,10 @@
     "alarm": "أنظمة الإنذار",
     "access": "أنظمة التحكم بالدخول",
     "av": "أنظمة الصوت والصورة"
+  },
+  "projectDetailLabels": {
+    "seeMore": "عرض المزيد",
+    "challenge": "التحدي",
+    "solution": "الحل"
   }
 }

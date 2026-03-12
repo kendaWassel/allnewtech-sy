@@ -16,7 +16,7 @@ const defaultIcon = L.icon({
   shadowSize: [41, 41],
 });
 
-export default function ContactMap({ locations = [] }) {
+export default function ContactMap({ locations = [] ,className=""}) {
   const containerRef = useRef(null);
   const mapRef = useRef(null);
 
@@ -93,10 +93,10 @@ export default function ContactMap({ locations = [] }) {
   }
 
   return (
-    <div className="w-full h-full min-h-[320px] lg:min-h-[400px] overflow-hidden shadow-[0px_2px_12px_#0000001A]">
+    <div className={`w-full h-full overflow-hidden shadow-[0px_2px_12px_#0000001A] ${className}`}>
       <div
         ref={containerRef}
-        className="w-full h-full min-h-[320px] lg:min-h-[400px] z-0"
+        className={`w-full h-full z-0 ${className}`}
         style={{ background: '#e8e8e8' }}
       />
     </div>

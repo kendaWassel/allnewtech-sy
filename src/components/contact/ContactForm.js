@@ -1,5 +1,4 @@
-import { getApiUrl, apiConfig} from '@/config/api';
-import ContactFormClient from './ContactFormClient';
+import { apiConfig, fetchFromAPI } from '@/config/api';import ContactFormClient from './ContactFormClient';
 
 const ContactForm = async ({ content, locale = "en" }) => {
   let services = [];
@@ -8,33 +7,22 @@ const ContactForm = async ({ content, locale = "en" }) => {
   let error = null;
 
   try {
-    const [formRes, locationsRes] = await Promise.all([
-      fetch(getApiUrl(apiConfig.endpoints.contactForm), {
-        cache: 'no-store',
-        headers: {
-          'Accept-Language': locale,
-        },
-      }),
-      fetch(getApiUrl(apiConfig.endpoints.locations), { cache: 'no-store' }),
-    ]);
-
-    const formData = await formRes.json();
-    if (formData.success) {
-      services = formData.data.services;
-      propertyTypes = formData.data.propertyType;
-    }
-
-    const locationsData = await locationsRes.json();
-    if (locationsData.success && Array.isArray(locationsData.data)) {
-      locations = locationsData.data;
-    }
-    
-  } catch (err) {
-    error = err.message || 'Failed to load contact form data. Please try again later.';
-    services = [];
-    propertyTypes = [];
-    locations = [];
-  }
+  const [formData, locationsData] = await Promise.all([
+    fetchFromAPI(apiConfig.endpoints.contactForm, {
+      cache: 'no-store',
+      headers: { 'Accept-Language': locale },
+    }),
+    fetchFromAPI(apiConfig.endpoints.locations, { cache: 'no-store' }),
+  ]);
+  services = formData.data.services;
+  propertyTypes = formData.data.propertyType;
+  if (Array.isArray(locationsData.data)) locations = locationsData.data;
+} catch (err) {
+  error = err.message || 'Failed to load contact form data. Please try again later.';
+  services = [];
+  propertyTypes = [];
+  locations = [];
+}
 
   return (
     <ContactFormClient

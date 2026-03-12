@@ -30,7 +30,12 @@ const HamMenu = ({ locale = "en", items }) => {
           aria-label="Toggle menu"
           aria-expanded={isMenuOpen}
         >
-          <Image src="/icons/ham-menu.svg" alt="menu icon" width={19} height={14}/>
+          <Image 
+          src="/icons/ham-menu.svg"
+          alt="menu icon" 
+          priority
+          width={19} 
+          height={14}/>
         </button>        
         {isMenuOpen && (
           <div 
@@ -46,7 +51,12 @@ const HamMenu = ({ locale = "en", items }) => {
             className="absolute top-[3rem] end-[1.5rem]"
             aria-label="Close menu"
           >
-            <Image src="/icons/XCircle.svg" alt="close button" width={19.5} height={19.5}/>
+            <Image 
+            src="/icons/XCircle.svg" 
+            alt="close button" 
+            priority
+            width={19.5} 
+            height={19.5}/>
           </button>
           
           <nav aria-label="Mobile navigation" className="flex flex-col mt-[6.5rem]">
@@ -67,6 +77,7 @@ const HamMenu = ({ locale = "en", items }) => {
               <Image 
                 src="/Logo-light.svg" 
                 alt="All New Tech Logo" 
+                priority
                 width={48} 
                 height={48}
                 className="object-contain h-[75px] w-full"

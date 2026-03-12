@@ -10,6 +10,7 @@ const isLocalApi =
 
 const nextConfig = {
   images: {
+    formats: ['image/avif', 'image/webp'],
     dangerouslyAllowLocalIP: isLocalApi,
     remotePatterns: [
       { protocol: 'http', hostname: '127.0.0.1', port: '8000', pathname: '/**' },

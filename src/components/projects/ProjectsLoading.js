@@ -13,7 +13,7 @@ const ProjectsLoading = () => {
           {[...Array(6)].map((_, i) => (
             <div
               key={i}
-              className="bg-white shadow-[0_12px_30px_rgba(0,0,0,0.15)] overflow-hidden flex flex-col"
+              className="bg-white shadow-[0_12px_30px_rgba(0,0,0,0.15)] overflow-hidden rounded-[12px] flex flex-col"
             >
               <div className="h-[165px] md:h-[300px] bg-gray-200 animate-pulse"></div>
               <div className="flex flex-col flex-1 px-[1.5rem] py-[0.75rem] md:px-[2rem] md:py-[1.5rem]">

@@ -65,33 +65,29 @@ const Header = ({ locale = "en", content }) => {
           <ul className="flex items-center xl:gap-[4.5rem] gap-[1rem]">
             {navItems.map((item) => (
               <li
-                key={`${item.href}-${item.label}`}
-                className="relative"
-                onMouseEnter={() => item.hasDropdown && setIsServicesHovered(true)}
-                onMouseLeave={() => item.hasDropdown && setIsServicesHovered(false)}
-              >
-                <Link href={withLocale(item.href)} className="text-[var(--secondary)] font-bold">
-                  {item.label}
-                </Link>
-                {item.hasDropdown && isServicesHovered && (
-                  <div
-                    className="absolute top-full start-1/2 rtl:translate-x-1/2 -translate-x-1/2 pt-2 w-[280px] z-50"
-                    onMouseEnter={() => setIsServicesHovered(true)}
-                    onMouseLeave={() => setIsServicesHovered(false)}
-                  >
-                    <div className="bg-[var(--primary-blue-first)] shadow-lg">
-                      <div className="flex flex-col py-6 px-8 gap-6">
-                        <Link href={withLocale(servicesDropdown.homeHref)} className="text-white font-bold text-center hover:opacity-80 transition-opacity">
-                          {servicesDropdown.homeLabel}
-                        </Link>
-                        <Link href={withLocale(servicesDropdown.commercialHref)} className="text-white font-bold text-center hover:opacity-80 transition-opacity">
-                          {servicesDropdown.commercialLabel}
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </li>
+  key={`${item.href}-${item.label}`}
+  className="relative group"
+>
+  <Link href={withLocale(item.href)} className="text-[var(--secondary)] font-bold">
+    {item.label}
+  </Link>
+  {item.hasDropdown && (
+    <div className="absolute top-full start-1/2 -translate-x-1/2 rtl:translate-x-1/2 pt-2 w-[280px] z-50
+      opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-150"
+    >
+      <div className="bg-[var(--primary-blue-first)] shadow-lg">
+        <div className="flex flex-col py-6 px-8 gap-6">
+          <Link href={withLocale(servicesDropdown.homeHref)} className="text-white font-bold text-center hover:opacity-80 transition-opacity">
+            {servicesDropdown.homeLabel}
+          </Link>
+          <Link href={withLocale(servicesDropdown.commercialHref)} className="text-white font-bold text-center hover:opacity-80 transition-opacity">
+            {servicesDropdown.commercialLabel}
+          </Link>
+        </div>
+      </div>
+    </div>
+  )}
+</li>
             ))}
           </ul>
         </nav>

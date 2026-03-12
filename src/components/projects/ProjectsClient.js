@@ -6,12 +6,21 @@ import CTAButton from '../ui/CTAButton';
 
 const ProjectsClient = ({ projects = [], services = [], content = null, locale = "en" }) => {
   const allProjectsLabel = content?.filters?.all || "All Projects";
-  const serviceLabel = content?.filters?.service || "Service";
-  const readMoreLabel = content?.filters?.readMore || "Read More";
+  const serviceLabel = content?.servicesLabel || "Service";
+  const readMoreLabel = content?.readMoreLabel;
   const [activeFilter, setActiveFilter] = useState('all');
   const [selectedServices, setSelectedServices] = useState([]);
   const [serviceMenuOpen, setServiceMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
+    const isHome = (type) => 
+  type?.toLowerCase() === 'home' || type === 'منزل';
+  const formatStepNumber = (value) => {
+    const digits=String(value).match(/\d+/)?.[0];
+    if(!digits) return value;
+    const localeTag = locale.startsWith('ar') ? 'ar-u-nu-arab' : 'en';
+    return new Intl.NumberFormat(localeTag).format(Number(digits));
+  };
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -62,7 +71,7 @@ const ProjectsClient = ({ projects = [], services = [], content = null, locale =
           <button
             type="button"
             onClick={clearFilters}
-            className={`px-[1.25rem] py-[0.25rem] md:px-[2rem] md:py-[0.5rem] text-[0.75rem] md:text-2xl transition-colors bg-[var(--secondary)] text-white`}
+            className={`rounded-[12px] px-[1.25rem] py-[0.25rem] md:px-[2rem] md:py-[0.5rem] text-[0.75rem] md:text-2xl transition-colors bg-[var(--secondary)] text-white`}
           >
             {allProjectsLabel}
           </button>
@@ -73,18 +82,18 @@ const ProjectsClient = ({ projects = [], services = [], content = null, locale =
                 setActiveFilter('service');
                 setServiceMenuOpen((open) => !open);
               }}
-            className={`flex items-center gap-2 px-[2rem] py-[0.25rem] md:px-[3.75rem] md:py-[0.5rem] text-[0.75rem] md:text-2xl transition-colors bg-[var(--secondary)] text-white`}
+            className={`rounded-[12px] flex items-center gap-2 px-[2rem] py-[0.25rem] md:px-[3.75rem] md:py-[0.5rem] text-[0.75rem] md:text-2xl transition-colors bg-[var(--secondary)] text-white`}
           >
               <span>{serviceLabel}</span>
               {selectedServices.length > 0 && (
-                <span className="absolute top-[-10px] right-[-10px] bg-[var(--primary-blue-first)] inline-flex items-center justify-center rounded-full px-2 py-[2px] text-[0.65rem] md:text-[0.7rem]">
-                  {selectedServices.length}
+                <span className="absolute top-[-10px] end-[-10px] bg-[var(--primary-blue-first)] inline-flex items-center justify-center rounded-full px-2 py-[2px] text-[0.65rem] md:text-[0.7rem]">
+                  {formatStepNumber(selectedServices.length)}
                 </span>
               )}
             </button>
 
             {serviceMenuOpen && services.length > 0 && (
-              <div className="absolute z-20 mt-2 w-56 rounded-md border border-gray-200 bg-white shadow-[0_8px_24px_rgba(0,0,0,0.12)] p-3 space-y-2">
+              <div className="absolute z-20 mt-2 w-56 rounded-md border border-gray-200 bg-white shadow-[0_8px_24px_rgba(0,0,0,0.12)] p-3 space-y-2 end-0">
                 {services.map((service) => {
                   const checked = selectedServices.includes(service);
                   return (
@@ -129,7 +138,7 @@ const ProjectsClient = ({ projects = [], services = [], content = null, locale =
               return (
                 <article
                   key={project.id}
-                  className="bg-white shadow-[0_12px_30px_rgba(0,0,0,0.15)] overflow-hidden flex flex-col"
+                  className="rounded-[12px] bg-white shadow-[0_12px_30px_rgba(0,0,0,0.15)] flex flex-col"
                 >
                   <div className="relative h-[165px] md:h-[300px]">
                     {project.mainImage ? (
@@ -137,8 +146,8 @@ const ProjectsClient = ({ projects = [], services = [], content = null, locale =
                         src={project.mainImage}
                         alt={project.title}
                         fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="object-cover rounded-t-[12px]"
+                        sizes="(max-width: 1023px) 100vw, 50vw"
                       />
                     ) : (
                       <div className="w-full h-full bg-gray-200" />
@@ -146,28 +155,22 @@ const ProjectsClient = ({ projects = [], services = [], content = null, locale =
 
                     {project.propertyType && (
                       <span
-                        className={`absolute top-0 left-0`}
+                        className={`absolute top-0 start-0`}
                       >
-                        {project.propertyType === 'home' ?
                         <Image
-                          src="/projects/home-label.svg"
-                          alt="Home Label"
-                          width={50}
-                          height={50}
-                          /> 
-                          :
-                           <Image
-                          src="/projects/commercial-label.svg"
-                          alt="Commercial Label"
-                          width={50}
-                          height={50}
-                          />
-                        }
+    src={isHome(project.propertyType) 
+      ? "/projects/home-label.svg" 
+      : "/projects/commercial-label.svg"}
+    alt={isHome(project.propertyType) ? "Home" : "Commercial"}
+    width={50}
+    height={50}
+    sizes="50px"
+  />
                       </span>
                     )}
                     {project.service && (
                       <span
-                        className="absolute top-0 left-[50px] px-[0.75rem] py-[0.5rem] text-[0.5rem] md:text-base text-white bg-[var(--primary-blue-second)]"
+                        className="absolute top-0 start-[50px] px-[0.75rem] py-[0.5rem] text-[0.5rem] md:text-base text-white bg-[var(--primary-blue-second)]"
                       >
                         {project.service}
                       </span>
@@ -184,7 +187,7 @@ const ProjectsClient = ({ projects = [], services = [], content = null, locale =
                     </div>
 
                     <div className="mt-auto flex justify-end">
-                      <CTAButton title={readMoreLabel} link={`/${locale}/projects/${project.id}`} color="blue" className="mr-[0.75rem] mb-[0.75rem] text-xs md:text-base !py-[2px] !px-[4px] md:!py-[0.5rem] md:!px-[1.5rem]"/>
+                      <CTAButton title={readMoreLabel} link={`/${locale}/projects/${project.id}`} color="blue" className="me-[0.75rem] mb-[0.75rem] text-xs md:text-base !py-[2px] !px-[4px] md:!py-[0.5rem] md:!px-[1.5rem] md:!rounded-[12px] !rounded-[6px] "/>
                     </div>
                   </div>
                 </article>
@@ -198,5 +201,3 @@ const ProjectsClient = ({ projects = [], services = [], content = null, locale =
 };
 
 export default ProjectsClient;
-
-

@@ -1,44 +1,23 @@
 import Image from "next/image";
 import Link from "next/link";
-import { apiConfig, getApiUrl, getImageUrl } from '@/config/api';
-
+import { apiConfig, getImageUrl, fetchFromAPI } from '@/config/api';
 const Projects = async ({ content, locale = "en" }) => {
   let projects = [];
   let error = null;
 
   try {
-    const url = getApiUrl(apiConfig.endpoints.projects);
-    const response = await fetch(url, {
-      next: { revalidate: 60 },
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`API request failed: ${response.status} ${response.statusText}`);
-    }
-
-    const data = await response.json();
-    
-    if (!data.success) {
-      throw new Error(data.msg || 'API request was not successful');
-    }
-    projects = (data.data || []).slice(0, 3).map((project) => {
-      const raw =
-        project.main_image ||
-        project.images?.main?.[0] ||
-        project.image ||
-        '';
-      return { id: project.id, main_image: getImageUrl(raw) };
-    });
-  } catch (err) {
-    error = err.message || 'Failed to load projects. Please try again later.';
-    projects = [];
-  }
+  const data = await fetchFromAPI(apiConfig.endpoints.projects, { next: { revalidate: 60 } });
+  projects = (data.data || []).slice(0, 3).map((project) => {
+    const raw = project.main_image || project.images?.main?.[0] || project.image || '';
+    return { id: project.id, main_image: getImageUrl(raw) };
+  });
+} catch (err) {
+  error = err.message || 'Failed to load projects. Please try again later.';
+  projects = [];
+}
 
   return (
-    <section className="py-[1.5rem] md:py-[9rem]">
+    <section className="py-[1.5rem] lg:py-[9rem]">
       <h2 className="relative z-11 font-bold text-center text-2xl lg:text-5xl mb-[1.5rem] lg:mb-[3rem]">
         {content?.title ?? "Our Projects"}
       </h2>
@@ -83,8 +62,22 @@ const Projects = async ({ content, locale = "en" }) => {
               )}
             </div>
           ))}
-          <Image src='/home/top-shape.svg' alt="white top shape" width={100} height={100} className="hidden md:block w-full absolute top-[-60px] lg:top-[-90px] xl:top-[-110px] z-10"/>
-          <Image src='/home/bottom-shape.svg' alt="white bottom shape" width={100} height={100} className="hidden md:block w-full absolute bottom-[-60px] lg:bottom-[-90px] xl:bottom-[-110px] z-10"/>
+          <Image
+            src='/home/top-shape.svg'
+            alt="white top shape"
+            width={100}
+            height={100}
+            sizes="(max-width: 767px) 0px, 100vw"
+            className="hidden md:block w-full absolute top-[-60px] lg:top-[-90px] xl:top-[-110px] z-10"
+          />
+          <Image
+            src='/home/bottom-shape.svg'
+            alt="white bottom shape"
+            width={100}
+            height={100}
+            sizes="(max-width: 767px) 0px, 100vw"
+            className="hidden md:block w-full absolute bottom-[-60px] lg:bottom-[-90px] xl:bottom-[-110px] z-10"
+          />
         </div>
       )}
 
@@ -95,7 +88,14 @@ const Projects = async ({ content, locale = "en" }) => {
           className="flex items-center justify-center gap-2 text-lg lg:text-2xl font-bold"
         >
           <span>{content?.link ?? "Explore Projects"}</span>
-          <Image src="/icons/arrow-right.svg" alt="" width={25} height={25} className="rtl:rotate-180"/>
+          <Image
+            src="/icons/arrow-right.svg"
+            alt=""
+            width={25}
+            height={25}
+            sizes="25px"
+            className="rtl:rotate-180"
+          />
         </Link>
       </div>
     </section>

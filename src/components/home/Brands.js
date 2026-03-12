@@ -1,6 +1,5 @@
 import Image from "next/image";
-import { apiConfig, getApiUrl, getImageUrl } from '@/config/api';
-
+import { apiConfig, getImageUrl, fetchFromAPI } from '@/config/api';
 const Brands = async ({ className = "", companies: providedCompanies = null, locale = "en" }) => {
   let companies = [];
   let error = null;
@@ -11,41 +10,18 @@ const Brands = async ({ className = "", companies: providedCompanies = null, loc
     companies = providedCompanies;
   } else {
     try {
-      const url = getApiUrl(apiConfig.endpoints.companies);
-      const response = await fetch(url, {
-        next: { revalidate: 60 },
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept-Language': locale,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`API request failed: ${response.status} ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      
-      if (!data.success) {
-        throw new Error(data.msg || 'API request was not successful');
-      }
-      
-      // Sort by priority if available, otherwise by id
-      const allCompanies = data.data
-        .map((company) => ({
-          id: company.id,
-          name: company.name || '',
-          logo: getImageUrl(company.logo || ''),
-          priority: company.priority || 999,
-        }))
-        .sort((a, b) => a.priority - b.priority);
-      
-      // Skip first 4 companies (they're shown in About section)
-      companies = allCompanies.slice(4);
-    } catch (err) {
-      error = err.message || 'Failed to load brands. Please try again later.';
-      companies = [];
-    }
+  const data = await fetchFromAPI(apiConfig.endpoints.companies, {
+    next: { revalidate: 60 },
+    headers: { 'Accept-Language': locale },
+  });
+  const allCompanies = data.data
+    .map((company) => ({ id: company.id, name: company.name || '', logo: getImageUrl(company.logo || ''), priority: company.priority || 999 }))
+    .sort((a, b) => a.priority - b.priority);
+  companies = allCompanies.slice(4);
+} catch (err) {
+  error = err.message || 'Failed to load brands. Please try again later.';
+  companies = [];
+}
   }
 
   return (
@@ -84,8 +60,8 @@ const Brands = async ({ className = "", companies: providedCompanies = null, loc
                 src={company.logo}
                 alt={`${company.name} security solutions partner`}
                 fill
-                className="object-contain"
-                sizes="(max-width: 640px) 70px, (max-width: 768px) 100px, 140px"
+                className="object-contain brightness-0 opacity-40"
+                sizes="(min-width: 1024px) 160px, (min-width: 640px) 80px, 48px"
               />
             </li>
           ))}

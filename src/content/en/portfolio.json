@@ -3,6 +3,8 @@
     "title": "Our Work",
     "subtitle": "Real Projects. Proven Results"
   },
+  "readMoreLabel": "Read More",
+  "servicesLabel": "Services",
   "filters": {
     "all": "All Projects",
     "home": "Home Solutions",
@@ -11,6 +13,11 @@
     "alarm": "Alarm Systems",
     "access": "Access Control",
     "av": "Audio & Visual"
+  },
+  "projectDetailLabels": {
+    "seeMore": "See More",
+    "challenge": "The Challenge",
+    "solution": "Our Solution"
   }
 }
 

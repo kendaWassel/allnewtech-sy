@@ -5,11 +5,9 @@ import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import User from '../ui/User';
-
 const TestimonialsCarouselMobile = ({ testimonials }) => {
   const renderStars = (rating) => {
     const normalizedRating = Math.max(0, Math.min(5, Math.round(Number(rating) || 0)));
-
     return Array.from({ length: 5 }, (_, index) => (
       <Image
         key={index}
@@ -18,6 +16,7 @@ const TestimonialsCarouselMobile = ({ testimonials }) => {
         aria-hidden="true"
         width={50}
         height={50}
+        sizes="(min-width: 1024px) 50px, (min-width: 768px) 20px, 15px"
         className={`lg:w-[50px] lg:h-[50px] md:w-[20px] md:h-[20px] w-[15px] h-[15px] lg:p-[0.5rem] p-[0.1rem] lg:rounded-[8px] rounded-[4px] ${index < normalizedRating ? 'bg-[var(--yellow)]' : 'bg-[#989898]'}`}
       />
     ));
@@ -38,7 +37,8 @@ const TestimonialsCarouselMobile = ({ testimonials }) => {
           alt="Previous"
           width={12}
           height={11}
-          className="rotate-180 lg:w-[12px] lg:h-[11px] w-[8px] h-[15px]"
+          sizes="(min-width: 1024px) 12px, 8px"
+          className="ltr:rotate-180 lg:w-[12px] lg:h-[11px] w-[8px] h-[15px]"
         />
       </button>
 
@@ -64,11 +64,8 @@ const TestimonialsCarouselMobile = ({ testimonials }) => {
                 className="relative z-100 flex h-full items-center px-[var(--small-padding)] lg:px-[var(--inline-padding)]"
                 aria-live="polite"
               >
-                <div className="absolute xl:w-[30rem] xl:h-[30rem] lg:w-[25rem] lg:h-[25rem] md:w-[20rem] md:h-[20rem] sm:w-[10rem] sm:h-[10rem] w-[6rem] h-[6rem] bg-white lg:start-[10%] sm:start-[3rem] start-[2rem] rounded-full flex items-center justify-center overflow-hidden">
-                  <User imageUrl={testimonial.image} alt="Customer testimonial" />
-                </div>
                 <div className="flex-2 sm:flex-3 md:flex-1" aria-hidden="true" />
-                <div className="flex-3 sm:flex-5 md:flex-1">
+                <div className="relative flex-3 sm:flex-5 md:flex-1">
                   <div
                     className="flex lg:gap-3 gap-1 lg:mb-[2rem] md:mb-[1rem] mb-[0.5rem] lg:mt-[3rem] md:mt-0 mt-[1.5rem]"
                     itemProp="reviewRating"
@@ -81,7 +78,7 @@ const TestimonialsCarouselMobile = ({ testimonials }) => {
                     <meta itemProp="bestRating" content="5" />
                     {renderStars(testimonial.rating)}
                   </div>
-                  <div className="md:w-[75%] w-[95%]">
+                  <div className="md:w-[75%] w-[90%]">
                     <p className="text-white lg:text-2xl md:text-[1rem] text-[0.75rem] leading-[1.2] mb-6" itemProp="reviewBody">
                       {testimonial.text}
                     </p>
@@ -89,6 +86,10 @@ const TestimonialsCarouselMobile = ({ testimonials }) => {
                   <span itemProp="author" itemScope itemType="https://schema.org/Person" className="sr-only">
                     <span itemProp="name">Customer</span>
                   </span>
+
+                  <div className="absolute sm:w-[10rem] sm:h-[10rem] w-[6rem] h-[6rem] bg-white top-1/2 -translate-y-1/2 sm:start-[-11rem] start-[-6.5rem] rounded-full flex items-center justify-center overflow-hidden">
+                    <User imageUrl={testimonial.image} alt="Customer testimonial" />
+                  </div>
                 </div>
               </article>
             </SwiperSlide>
@@ -109,7 +110,8 @@ const TestimonialsCarouselMobile = ({ testimonials }) => {
           alt="Next"
           width={12}
           height={11}
-          className='lg:w-[12px] lg:h-[11px] w-[8px] h-[15px]'
+          sizes="(min-width: 1024px) 12px, 8px"
+          className='rtl:rotate-180 lg:w-[12px] lg:h-[11px] w-[8px] h-[15px]'
         />
       </button>
     </>

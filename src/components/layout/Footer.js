@@ -32,6 +32,7 @@ const Footer = ({ locale, content }) => {
                 alt="All New Tech Logo"
                 width={300}
                 height={160}
+                sizes="(min-width: 1024px) 300px, 200px"
                 className="lg:w-[300px] lg:h-[160px] w-[200px] h-[130px] "
               />
             </Link>
@@ -91,7 +92,7 @@ const Footer = ({ locale, content }) => {
           </div>
         </div>
       </div>
-      <div className="bg-[var(--primary-blue-second)] py-4 lg:px-[var(--inline-padding)]">
+      <div className="bg-[var(--primary-blue-first)] py-4 lg:px-[var(--inline-padding)]">
         <div className="lg:ps-[3rem] lg:text-start text-center">
           <p className="text-white text-sm">{copyright}</p>
         </div>

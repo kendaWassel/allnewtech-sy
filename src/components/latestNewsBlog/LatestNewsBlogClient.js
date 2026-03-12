@@ -11,9 +11,9 @@ const LatestNewsBlogClient = ({ news }) => {
                 alt="News image"
                 width={420}
                 height={160}
+                priority
                 className="w-full h-[10rem] md:h-full object-cover"
-                sizes="(max-width: 768px) 100vw, 60vw"
-                unoptimized
+                sizes="(min-width: 768px) calc(100vw - 12rem), 100vw"
               />
             ) : (
               <div className="w-full h-full bg-gray-200" />

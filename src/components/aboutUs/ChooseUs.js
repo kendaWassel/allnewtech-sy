@@ -22,7 +22,7 @@ const ChooseUs = ({content,locale}) => {
         {/* Desktop / large layout - grid-based, cleaner lines */}
         <div className="hidden md:block">
           <div className="mx-[aut] lg:px-[5rem]">
-            <div className="grid grid-cols-[minmax(0,1.3fr)_auto_minmax(0,1.3fr)] grid-rows-3 gap-y-16 lg:gap-y-20 items-center">
+            <div className="grid grid-cols-[minmax(0,1.3fr)_auto_minmax(0,1.3fr)] grid-rows-3 gap-y-16 lg:gap-y-20 rtl:gap-y-25 items-center">
               {/* Top-left */}
               <div className="relative flex flex-col items-start gap-1 lg:w-[95%]">
                 <ChooseUsReason title={aftercare.title} description={aftercare.description}/>
@@ -54,6 +54,7 @@ const ChooseUs = ({content,locale}) => {
                       alt="Security lock icon"
                       width={225}
                       height={225}
+                      sizes="(max-width: 767px) 0px, (max-width: 1023px) 150px, 225px"
                       className="w-full h-full"
                     />
                   </div>
@@ -93,6 +94,7 @@ const ChooseUs = ({content,locale}) => {
                     alt="Security lock icon"
                     width={97}
                     height={97}
+                    sizes="(min-width: 768px) 0px, 97px"
                     className="w-[97px] h-[97px]"
                   />
                 </div>
@@ -104,28 +106,28 @@ const ChooseUs = ({content,locale}) => {
               {/* Main vertical line */}
               {/* the height will bring it right to the horizontal line  */}
               {/* left is 65.5px so it can be at the center of the lock photo (its width 131px) */}
-              <div className="absolute h-[calc(100%_-_20px)] left-[65.5px] -translate-x-1/2 top-0 bottom-0 w-[3px] bg-[var(--secondary)]" aria-hidden="true" />
+              <div className="absolute h-[calc(100%_-_20px)] start-[65.5px] rtl:translate-x-1/2 -translate-x-1/2 top-0 bottom-0 w-[3px] bg-[var(--secondary)]" aria-hidden="true" />
 
               {/* Timeline items */}
               {/* margin is the width of the photo (131px) minus the space i want it to be (31px) */}
-              <div className="w-full ml-[100px] pt-4">
+              <div className="w-full ms-[100px] pt-4">
                 {mobileItems.map((item, index) => (
                   <div key={item.title || index} className="relative mb-[1.5rem] last:mb-0">
                     {/* left space of the horizontal line is the margin 100 - the left of the main line 65.5 == 34.5   */}
                     {/* the bottom space will bring the horizontal line to the vertical line  */}
-                    <div className="absolute left-[-34.5px] bottom-[20px] flex items-center">
+                    <div className="absolute start-[-34.5px] bottom-[20px] flex items-center">
                       {/* horizontal line */}
                       <div 
                         className="w-[2rem] h-[3px] bg-[var(--secondary)]"
                         aria-hidden="true"
                       />
                       {/* arrow  */}
-                   <span className='absolute w-[12px] h-[12px] right-0 rotate-[45deg] border-[var(--secondary)] border-t-[3px] border-r-[3px] '></span>
+                   <span className='absolute w-[12px] h-[12px] end-0 rotate-[45deg] rtl:rotate-[-45deg] border-[var(--secondary)] border-t-[3px] border-e-[3px] '></span>
 
                     </div>
 
                     {/* Text content */}
-                    <div className="ml-2 sm:text-sm text-xs">
+                    <div className="ms-2 sm:text-sm text-xs">
                       <h3 className="font-bold text-[var(--secondary)]">
                         {item.title}:
                       </h3>

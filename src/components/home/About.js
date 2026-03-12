@@ -1,45 +1,24 @@
 import { getContent } from "@/lib/get-content";
 import Image from 'next/image'
 import Brands from './Brands'
-import { apiConfig, getApiUrl, getImageUrl } from '@/config/api';
-
+import { apiConfig, getImageUrl, fetchFromAPI } from '@/config/api';
 const About = async ({ content: passedContent, locale = "en" }) => {
     const content = passedContent || (await getContent(locale, "homepage"));
     let companies = [];
     let error = null;
 
     try {
-        const url = getApiUrl(apiConfig.endpoints.companies);
-        const response = await fetch(url, {
-            next: { revalidate: 60 },
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept-Language': locale,
-            },
-        });
-
-        if (!response.ok) {
-            throw new Error(`API request failed: ${response.status} ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        
-        if (!data.success) {
-            throw new Error(data.msg || 'API request was not successful');
-        }
-        
-        companies = data.data
-            .map((company) => ({
-                id: company.id,
-                name: company.name || '',
-                logo: getImageUrl(company.logo || ''),
-                priority: company.priority || 999,
-            }))
-            .sort((a, b) => a.priority - b.priority);
-    } catch (err) {
-        error = err.message || 'Failed to load companies. Please try again later.';
-        companies = [];
-    }
+  const data = await fetchFromAPI(apiConfig.endpoints.companies, {
+    next: { revalidate: 60 },
+    headers: { 'Accept-Language': locale },
+  });
+  companies = data.data
+    .map((company) => ({ id: company.id, name: company.name || '', logo: getImageUrl(company.logo || ''), priority: company.priority || 999 }))
+    .sort((a, b) => a.priority - b.priority);
+} catch (err) {
+  error = err.message || 'Failed to load companies. Please try again later.';
+  companies = [];
+}
 
     const firstFourCompanies = companies.slice(0, 4);
     
@@ -49,7 +28,7 @@ const About = async ({ content: passedContent, locale = "en" }) => {
     return (
         <section className='lg:px-[var(--inline-padding)] py-[3rem] lg:bg-[var(--secondary)] lg:text-white'>
             <div className='flex lg:flex-row flex-col center justify-between gap-6'>
-                <p className='lg:w-[55%] lg:p-0 px-[4.3rem] lg:text-2xl leading-[1.3] text-center lg:text-start'>{content?.about?.description}</p>
+                <p dir={locale.startsWith("ar") ? "rtl" : "ltr"} className='lg:w-[55%] lg:p-0 px-[4.3rem] lg:text-2xl leading-[1.3] text-center lg:text-start'>{content?.about?.description}</p>
                 <div className='lg:block hidden w-[32%] text-center lg:text-start'>
                     <h2 className='font-bold text-[2rem] lg:block hidden'>{content?.trustedBy?.title}</h2>
                     {/* brands  */}
@@ -70,8 +49,9 @@ const About = async ({ content: passedContent, locale = "en" }) => {
                                                 src={company.logo} 
                                                 alt={`${company.name}-logo`} 
                                                 fill
-                                                className="object-contain"
-                                                sizes="110px"
+                                                priority
+                                                className="object-contain brightness-0 invert"
+                                                sizes="160px"
                                             />
                                         </div>
                                     ))}
@@ -85,8 +65,9 @@ const About = async ({ content: passedContent, locale = "en" }) => {
                                                 src={company.logo} 
                                                 alt={`${company.name}-logo`} 
                                                 fill
-                                                className="object-contain"
-                                                sizes="137px"
+                                                priority
+                                                className="object-contain brightness-0 invert"
+                                                sizes="160px"
                                             />
                                         </div>
                                     ))}

@@ -16,6 +16,7 @@ const TestimonialsCarouselDesktop = ({ testimonials }) => {
           aria-hidden="true"
           width={50}
           height={50}
+          sizes="23px"
           className="h-[23px] w-[23px]"
         />
       </div>
@@ -41,6 +42,7 @@ const TestimonialsCarouselDesktop = ({ testimonials }) => {
                     alt="Customer testimonial"
                     width={100}
                     height={100}
+                    sizes="153px"
                     className="object-cover w-[90%] h-[90%] rounded-full"
                   />
                 ) : (

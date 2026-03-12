@@ -3,9 +3,13 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import Image from "next/image";
 
-const ProjectDetailClient = ({ project }) => {
-  console.log('project in client:', project);
-  // displaySet: [main, thumb0, thumb1, thumb2] — main image + row of thumbnails, swap on click
+const ProjectDetailClient = ({ project, labels = {} }) => {
+  const seeMoreLabel = labels?.seeMore || "See More";
+  const challengeLabel = labels?.challenge || "The Challenge";
+  const solutionLabel = labels?.solution || "Our Solution";
+  const isHome = (type) => 
+  type?.toLowerCase() === 'home' || type === 'منزل';
+  // displaySet: [main, thumb0, thumb1, thumb2] â€” main image + row of thumbnails, swap on click
   const initialDisplaySet = useMemo(
     () =>
       [
@@ -114,8 +118,9 @@ const ProjectDetailClient = ({ project }) => {
                     src={mainImage}
                     alt={project.title}
                     fill
+                    priority
                     className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 50vw"
+                    sizes="(max-width: 1023px) 100vw, 60vw"
                   />
                 ) : (
                   <div className="w-full h-full bg-gray-200" />
@@ -125,18 +130,18 @@ const ProjectDetailClient = ({ project }) => {
                     <button
                       type="button"
                       onClick={handleMainPrevious}
-                className="hidden md:block absolute top-1/2 -translate-y-1/2 lg:left-[2rem] left-[0.5rem] bg-[var(--secondary)] cursor-pointer text-white px-[0.75rem] py-[1.4rem] z-10 rotate-180"
+                className="hidden md:block absolute top-1/2 -translate-y-1/2 lg:start-[2rem] start-[0.5rem] bg-[var(--secondary)] cursor-pointer text-white px-[0.75rem] py-[1.4rem] z-10 ltr:rotate-180"
                 aria-label="Previous image"
               >
-                <Image src="/icons/arrow.svg" width={12} height={20} alt="Previous image" />
+                <Image src="/icons/arrow.svg" width={12} height={20} alt="Previous image" sizes="12px" />
                     </button>
                     <button
                       type="button"
                       onClick={handleMainNext}
-                className="hidden md:block absolute top-1/2 -translate-y-1/2 lg:right-[2rem] right-[0.5rem] bg-[var(--secondary)] cursor-pointer text-white px-[0.75rem] py-[1.4rem] z-10"
+                className="hidden md:block absolute top-1/2 -translate-y-1/2 lg:end-[2rem] end-[0.5rem] bg-[var(--secondary)] cursor-pointer text-white px-[0.75rem] py-[1.4rem] z-10 rtl:rotate-180"
                 aria-label="Next image"
               >
-                <Image src="/icons/arrow.svg" width={12} height={20} alt="Next image" />
+                <Image src="/icons/arrow.svg" width={12} height={20} alt="Next image" sizes="12px" />
 
                     </button>
                   </>
@@ -158,7 +163,7 @@ const ProjectDetailClient = ({ project }) => {
                         alt={`Thumbnail ${index + 1}`}
                         fill
                         className="object-cover"
-                        sizes="100px"
+                        sizes="(min-width: 1024px) 96px, (min-width: 768px) 80px, 48px"
                       />
                     </button>
                   ))}
@@ -166,10 +171,10 @@ const ProjectDetailClient = ({ project }) => {
                     <button
                       type="button"
                       onClick={handleSeeMore}
-                      className="cursor-pointer lg:ml-[1.5rem] md:text-2xl flex items-center"
+                      className="cursor-pointer lg:ms-[1.5rem] md:text-2xl flex items-center"
                     >
-                      See More
-                      <Image src="/icons/arrow-right.svg" alt="right arrow" width={25} height={25} />
+                      {seeMoreLabel}
+                      <Image src="/icons/arrow-right.svg" alt="right arrow" width={25} height={25} sizes="25px" className="rtl:rotate-180"/>
                     </button>
                   )}
                 </div>
@@ -184,25 +189,20 @@ const ProjectDetailClient = ({ project }) => {
               <div className="relative my-[1.5rem]">
                 {project.propertyType && (
                   <div className="relative">
-                    {project.propertyType === "home" ? (
-                      <Image
-                        src="/projects/home-label.svg"
-                        alt="Home Label"
-                        width={50}
-                        height={50}
-                      />
-                    ) : (
-                      <Image
-                        src="/projects/commercial-label.svg"
-                        alt="Commercial Label"
-                        width={50}
-                        height={50}
-                      />
-                    )}
+                    
+                    <Image
+    src={isHome(project.propertyType) 
+      ? "/projects/home-label.svg" 
+      : "/projects/commercial-label.svg"}
+    alt={isHome(project.propertyType) ? "Home" : "Commercial"}
+    width={50}
+    height={50}
+    sizes="50px"
+  />
                   </div>
                 )}
                 {project.service && (
-                  <span className="absolute top-0 left-[50px] px-[0.75rem] py-[0.5rem] text-[0.5rem] md:text-base text-white bg-[var(--primary-blue-second)]">
+                  <span className="absolute top-0 start-[50px] px-[0.75rem] py-[0.5rem] text-[0.5rem] md:text-base text-white bg-[var(--primary-blue-second)]">
                     {project.service}
                   </span>
                 )}
@@ -219,15 +219,15 @@ const ProjectDetailClient = ({ project }) => {
             {/* Left: The Challenge */}
             <div>
               <h2 className="font-bold text-xl md:text-3xl lg:text-[2.5rem] mb-[1.5rem]">
-                The Challenge
+                {challengeLabel}
               </h2>
               <ul>
                 {project.challenges.map((challenge, index) => (
                   <li
                     key={index}
-                    className=" md:text-2xl flex items-start"
+                    className="md:text-2xl flex items-start"
                   >
-                    <span className="mr-2">•</span>
+                    <span className="me-2">•</span>
                     <span>{challenge}</span>
                   </li>
                 ))}
@@ -235,7 +235,7 @@ const ProjectDetailClient = ({ project }) => {
             </div>
             <div>
               <h2 className="font-bold text-xl md:text-3xl lg:text-[2.5rem] mb-[1.5rem]">
-                Our Solution
+                {solutionLabel}
               </h2>
               <ul>
                 {project.solutions.map((solution, index) => (
@@ -258,15 +258,16 @@ const ProjectDetailClient = ({ project }) => {
         <div className="fixed inset-0 bg-[#00000094] z-1000 flex items-center justify-center">
           <div
             ref={modalRef}
-            className="relative py-[2rem] md:py-[5rem] overflow-y-auto bg-[var(--white)] md:max-w-[75%] max-w-[90%] max-h-[90vh] flex flex-col"
+            className="relative rounded-[48px] overflow-hidden bg-[var(--white)] md:max-w-[75%] max-w-[90%] max-h-[90vh] flex flex-col"
           >
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="absolute top-0 right-0 p-[0.4rem] md:p-[0.75rem] bg-[var(--primary-blue-first)] rounded-bl-[12px] md:rounded-bl-[24px] cursor-pointer"
+                className="absolute top-[1.5rem] end-[1.5rem] rounded-[12px] md:rounded-[24px] p-[0.4rem] md:p-[0.75rem] bg-[var(--primary-blue-first)] cursor-pointer z-10"
                 aria-label="Close modal"
               >
-                <Image src="/icons/XModal.svg" alt="close button" width={33} height={33} className="w-[19.5px] h-[19.5px] md:w-[33px] md:h-[33px]"/>
+                <Image src="/icons/XModal.svg" alt="close button" width={33} height={33} sizes="(min-width: 768px) 33px, 20px" className="w-[19.5px] h-[19.5px] md:w-[33px] md:h-[33px]"/>
               </button>
+            <div className="h-full my-[2.5rem] py-[2rem] md:py-[5rem] overflow-y-auto pe-1 [scrollbar-width:thin] [scrollbar-color:#8B909A_transparent] [&::-webkit-scrollbar]:w-[8px] [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#8B909A] [&::-webkit-scrollbar-thumb]:border-[2px] [&::-webkit-scrollbar-thumb]:border-transparent [&::-webkit-scrollbar-thumb]:bg-clip-content [&::-webkit-scrollbar-thumb:hover]:bg-[#737A85]">
             {/* modal header */}
             <div className="px-[2rem] md:px-[3rem] lg:px-[6rem] flex flex-col gap-5 lg:flex-row items-start justify-between">
               <h3 className="flex-2 font-bold text-base md:text-3xl lg:text-[2.5rem]">
@@ -275,23 +276,15 @@ const ProjectDetailClient = ({ project }) => {
               <div className="flex-1 relative flex items-start">
                 {project.propertyType && (
                   <div className="w-[35px] h-[35px] md:w-[50px] md:h-[50px]">
-                    {project.propertyType === "home" ? (
                       <Image
-                        src="/projects/home-label.svg"
-                        alt="Home Label"
-                        width={50}
-                        height={50}
-                        className="w-full h-full"
-                      />
-                    ) : (
-                      <Image
-                        src="/projects/commercial-label.svg"
-                        alt="Commercial Label"
-                        width={50}
-                        height={50}
-                        className="w-full h-full"
-                      />
-                    )}
+    src={isHome(project.propertyType) 
+      ? "/projects/home-label.svg" 
+      : "/projects/commercial-label.svg"}
+    alt={isHome(project.propertyType) ? "Home" : "Commercial"}
+    width={50}
+    height={50}
+    sizes="50px"
+  />
                   </div>
                 )}
                 {project.service && (
@@ -306,10 +299,10 @@ const ProjectDetailClient = ({ project }) => {
             <div className="px-[2rem] md:px-[3rem] lg:px-[6rem] mt-[1.5rem] md:mt-[2.5rem] relative flex-1 flex items-center justify-center">
               <button
                 onClick={handlePrevious}
-                className="hidden md:block absolute lg:left-[2rem] left-[0.5rem] bg-[var(--secondary)] cursor-pointer text-white px-[0.75rem] py-[1.4rem] z-10 rotate-180"
+                className="hidden md:block absolute rounded-[12px] lg:start-[2rem] start-[0.5rem] bg-[var(--secondary)] cursor-pointer text-white px-[0.75rem] py-[1.4rem] z-9 ltr:rotate-180"
                 aria-label="Previous image"
               >
-                <Image src="/icons/arrow.svg" width={12} height={20} alt="Previous image"/>
+                <Image src="/icons/arrow.svg" width={12} height={20} alt="Previous image" sizes="12px"/>
               </button>
 
               <div className="relative w-full h-[13rem] md:h-[25rem] lg:h-[37rem]">
@@ -326,10 +319,10 @@ const ProjectDetailClient = ({ project }) => {
 
               <button
                 onClick={handleNext}
-                className="hidden md:block absolute lg:right-[2rem] right-[0.5rem] bg-[var(--secondary)] cursor-pointer text-white px-[0.75rem] py-[1.4rem] z-10"
+                className="hidden md:block absolute rounded-[12px] lg:end-[2rem] end-[0.5rem] bg-[var(--secondary)] cursor-pointer text-white px-[0.75rem] py-[1.4rem] z-9 rtl:rotate-180"
                 aria-label="Next image"
               >
-                <Image src="/icons/arrow.svg" width={12} height={20} alt="Next image" />
+                <Image src="/icons/arrow.svg" width={12} height={20} alt="Next image" sizes="12px" />
 
               </button>
             </div>
@@ -352,11 +345,12 @@ const ProjectDetailClient = ({ project }) => {
                       alt={`Thumbnail ${index + 1}`}
                       fill
                       className="object-cover"
-                      sizes="96px"
+                      sizes="(min-width: 768px) 96px, 40px"
                     />
                   </button>
                 ))}
               </div>
+            </div>
             </div>
           </div>
         </div>

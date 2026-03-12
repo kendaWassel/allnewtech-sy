@@ -1,47 +1,35 @@
-import { apiConfig, getApiUrl, getImageUrl } from '@/config/api';
+import { apiConfig, getImageUrl, fetchFromAPI } from '@/config/api';
 import ProjectDetailClient from './ProjectDetailClient';
+import { getContent } from '@/lib/get-content';
 
 const ProjectDetail = async ({ projectId, locale = "en" }) => {
   let project = null;
+  const content = await getContent(locale, "portfolio");
+  const labels = content?.projectDetailLabels || null;
 
   try {
-    const url = getApiUrl(`${apiConfig.endpoints.portfolioProjects}/${projectId}`);
-    const response = await fetch(url, {
-      next: { revalidate: 60 },
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept-Language': locale,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`API request failed: ${response.status} ${response.statusText}`);
-    }
-
-    const data = await response.json();
-
-    if (!data.success) {
-      throw new Error(data.msg || 'API request was not successful');
-    }
-
-    const main = data.data.images?.main?.[0] || '';
-    const secondary = data.data.images?.secondary || [];
-    const other = data.data.images?.other || [];
-    project = {
-      id: data.data.id,
-      title: data.data.title || '',
-      description: data.data.description || '',
-      service: data.data.service || '',
-      propertyType: data.data.property_type || '',
-      challenges: data.data.challenges || [],
-      solutions: data.data.solutions || [],
-      mainImage: getImageUrl(main),
-      secondaryImages: secondary.map(getImageUrl).filter(Boolean),
-      otherImages: other.map(getImageUrl).filter(Boolean),
-    };
-  } catch (err) {
-    project = null;
-  }
+  const data = await fetchFromAPI(`${apiConfig.endpoints.portfolioProjects}/${projectId}`, {
+    next: { revalidate: 60 },
+    headers: { 'Accept-Language': locale },
+  });
+  const main = data.data.images?.main?.[0] || '';
+  const secondary = data.data.images?.secondary || [];
+  const other = data.data.images?.other || [];
+  project = {
+    id: data.data.id,
+    title: data.data.title || '',
+    description: data.data.description || '',
+    service: data.data.service || '',
+    propertyType: data.data.property_type || '',
+    challenges: data.data.challenges || [],
+    solutions: data.data.solutions || [],
+    mainImage: getImageUrl(main),
+    secondaryImages: secondary.map(getImageUrl).filter(Boolean),
+    otherImages: other.map(getImageUrl).filter(Boolean),
+  };
+} catch {
+  project = null;
+}
 
   if (!project) {
     return (
@@ -57,7 +45,7 @@ const ProjectDetail = async ({ projectId, locale = "en" }) => {
     );
   }
 
-  return <ProjectDetailClient project={project} />;
+  return <ProjectDetailClient project={project} labels={labels} />;
 };
 
 export default ProjectDetail;

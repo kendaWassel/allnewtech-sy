@@ -1,21 +1,25 @@
 'use client';
 import { useState } from 'react';
-import { getApiUrl } from '@/config/api';
+import { apiConfig, postToAPI } from '@/config/api';
 import fallbackContact from "@/content/contact";
 
-const validateQuoteForm = (formData) => {
-  if (!formData.firstName.trim()) return 'First name is required.';
-  if (!formData.lastName.trim()) return 'Last name is required.';
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) return 'Please enter a valid email address.';
-  if (!/^[0-9+()\-\s]{6,20}$/.test(formData.phone)) return 'Please enter a valid phone number.';
-  if (!formData.propertyTypeId) return 'Please select a property type.';
-  if (!formData.postCode.trim()) return 'Post code is required.';
-  if (formData.serviceIds.length === 0) return 'Please select at least one service.';
-  if (!formData.requirements.trim()) return 'Please add your requirements.';
-  if (!formData.preferredContactMethodId) return 'Please select a preferred contact method.';
-  if (!formData.budgetRangeId) return 'Please select a budget range.';
-  if (!formData.file) return 'Please upload a file.';
-  if (!formData.confirmation) return 'Please confirm the consent checkbox.';
+const validateQuoteForm = (formData, validation = {}) => {
+  const v = validation;
+  if (!formData.firstName.trim()) return v.firstNameRequired || 'First name is required.';
+  if (!formData.lastName.trim()) return v.lastNameRequired || 'Last name is required.';
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) return v.invalidEmail || 'Please enter a valid email address.';
+  if (!/^[0-9+()\-\s]{6,20}$/.test(formData.phone)) return v.invalidPhone || 'Please enter a valid phone number.';
+  if (!formData.propertyTypeId) return v.propertyTypeRequired || 'Please select a property type.';
+  if (!formData.postCode.trim()) return v.postCodeRequired || 'Post code is required.';
+  if (formData.serviceIds.length === 0) return v.serviceRequired || 'Please select at least one service.';
+  if (!formData.requirements.trim()) return v.requirementsRequired || 'Please add your requirements.';
+  if (!formData.preferredContactMethodId) return v.preferredContactRequired || 'Please select a preferred contact method.';
+  if (!formData.budgetRangeId) return v.budgetRequired || 'Please select a budget range.';
+  if (!formData.file) return v.fileRequired || 'Please upload a file.';
+  const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/png', 'image/jpeg'];
+  if (!allowedTypes.includes(formData.file.type)) return v.invalidFileType || 'Please upload a PDF, Word document, or image.';
+  if (formData.file.size > 5 * 1024 * 1024) return v.fileTooLarge || 'File size must be under 5MB.';
+  if (!formData.confirmation) return v.consentRequired || 'Please confirm the consent checkbox.';
   return '';
 };
 
@@ -42,6 +46,8 @@ const CustomQuoteClient = ({
   const contact = content || fallbackContact;
   const quoteRequest = contact?.quoteRequest || {};
   const fields = quoteRequest?.fields || {};
+  const messages = contact?.messages || {};
+  const validation = contact?.validation || {};
   const contactInfo = fields?.contactInfo || {};
   const siteDetails = fields?.siteDetails || {};
   const additional = fields?.additional || {};
@@ -59,6 +65,7 @@ const CustomQuoteClient = ({
   const preferredContact = additional?.fields?.find((field) => field.name === 'preferredContact')?.label;
   const budgetRange = additional?.fields?.find((field) => field.name === 'budgetRange')?.label;
   const fileUpload = additional?.fields?.find((field) => field.name === 'fileUpload')?.label || 'File upload';
+  const sendingText = messages.sending || contact?.contactForm?.sending || 'Sending...';
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -86,6 +93,13 @@ const CustomQuoteClient = ({
     }));
   };
 
+  const handlePhoneKeyDown = (e) => {
+    const allowed = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Enter', '+', '(', ')', '-', ' '];
+    if (!allowed.includes(e.key) && !/^[0-9]$/.test(e.key)) {
+      e.preventDefault();
+    }
+  };
+
   const handleServiceToggle = (serviceId) => {
     setFormData((prev) => {
       const current = new Set(prev.serviceIds);
@@ -111,7 +125,7 @@ const CustomQuoteClient = ({
     setSubmitError('');
     setSubmitSuccess('');
 
-    const validationError = validateQuoteForm(formData);
+    const validationError = validateQuoteForm(formData, validation);
     if (validationError) {
       setSubmitError(validationError);
       return;
@@ -127,58 +141,20 @@ const CustomQuoteClient = ({
       payload.append('phone', formData.phone);
       payload.append('post_code', formData.postCode);
       payload.append('property_type_id', String(formData.propertyTypeId));
-      if (formData.serviceIds.length > 0) {
-        payload.append('service_id', String(formData.serviceIds[0]));
-        formData.serviceIds.forEach((id) => {
-          payload.append('service_id[]', String(id));
-        });
-      }
+      formData.serviceIds.forEach((id) => payload.append('services[]', String(id)));
       payload.append('requirements', formData.requirements);
       payload.append('preferred_contact_method_id', String(formData.preferredContactMethodId));
       payload.append('budget_range_id', String(formData.budgetRangeId));
       payload.append('confirmation', formData.confirmation ? '1' : '0');
+      if (formData.file) payload.append('file', formData.file);
 
-      if (formData.file) {
-        payload.append('file', formData.file);
-      }
-
-      const response = await fetch(getApiUrl('/api/request-for-a-quote'), {
-        method: 'POST',
-        body: payload,
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to submit form: ${response.status} ${response.statusText}`);
-      }
-
-      const data = await response.json();
-
-      if (!data.success) {
-        throw new Error(data.msg || 'Failed to submit form');
-      }
-
-      setSubmitSuccess(data.msg || 'Your quote request has been sent successfully.');
-      setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        postCode: '',
-        propertyTypeId: '',
-        serviceIds: [],
-        requirements: '',
-        preferredContactMethodId: '',
-        budgetRangeId: '',
-        file: null,
-        confirmation: false,
-      });
-
+      const data = await postToAPI(apiConfig.endpoints.customQuoteSubmit, payload, true);
+      setSubmitSuccess(data.msg || messages.successTitleRequest || 'Your quote request has been sent successfully.');
+      setFormData({ firstName: '', lastName: '', email: '', phone: '', postCode: '', propertyTypeId: '', serviceIds: [], requirements: '', preferredContactMethodId: '', budgetRangeId: '', file: null, confirmation: false });
       const fileInput = e.target.querySelector('input[name="file"]');
-      if (fileInput) {
-        fileInput.value = '';
-      }
+      if (fileInput) fileInput.value = '';
     } catch (submitErr) {
-      setSubmitError(submitErr.message || 'Something went wrong. Please try again.');
+      setSubmitError(submitErr.message || messages.somethingWrong || 'Something went wrong. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -191,16 +167,16 @@ const CustomQuoteClient = ({
     formOptions.budgetRange.length === 0;
 
   if (error) {
-    return <EmptyState message="Unable to load quote form. Try again!" />;
+    return <EmptyState message={messages.loadError || "Unable to load quote form. Try again!"} />;
   }
 
   if (isEmpty) {
-    return <EmptyState message="Form data is not available at the moment. Please check back soon!" />;
+    return <EmptyState message={messages.emptyForm || "Form data is not available at the moment. Please check back soon!"} />;
   }
 
   return (
     <section className="px-[1.3rem] px-0">
-        <div className="relative top-[-1.5rem] lg:top-[-8rem] mx-auto w-[fit-content] bg-[var(--white)] px-[3rem] py-[3.5rem] lg:p-[6.5rem]">
+        <div className="rounded-[32px] relative top-[-1.5rem] lg:top-[-8rem] mx-auto w-[fit-content] bg-[var(--white)] px-[3rem] py-[3.5rem] lg:p-[6.5rem]">
   <form onSubmit={handleSubmit} className="">
     <h2 className="font-bold md:text-2xl lg:text-[2rem] mb-[1rem] md:mb-[1.5rem] lg:mb-[1.5rem] text-start">
       {quoteRequest.title}
@@ -250,7 +226,8 @@ const CustomQuoteClient = ({
           placeholder={phone}
           value={formData.phone}
           onChange={handleChange}
-          className="w-full placeholder:text-black border-none outline-none text-[0.6rem] md:text-base"
+          onKeyDown={handlePhoneKeyDown}
+          className="rtl:text-end w-full placeholder:text-black border-none outline-none text-[0.6rem] md:text-base"
           required
         />
     </div>
@@ -291,50 +268,47 @@ const CustomQuoteClient = ({
     <h3 className="font-bold md:text-2xl lg:text-[2rem] mb-[1rem] md:mb-[1.5rem] md:mb-[1.5rem] text-start">{services.title}</h3>
       <div className="mb-[1.5rem] rounded-[4px] md:rounded-[12px] px-[1rem]">
         <div className="flex flex-col gap-2">
-{formOptions.services.map((service) => {
-  const isChecked = formData.serviceIds.includes(service.id);
-
-  return (
-    <label
-      key={service.id}
-      className="flex items-center gap-2 text-[0.6rem] sm:text-base cursor-pointer select-none"
-    >
-      <input
-        type="checkbox"
-        checked={isChecked}
-        onChange={() => handleServiceToggle(service.id)}
-        className="hidden"
-      />
-
-      <div
-        className={`
-          w-5 h-5
-          flex items-center justify-center
-          transition duration-200
-          ${isChecked ? "bg-[var(--primary-blue-first)]" : "bg-white"}
-        `}
-      >
-        <svg
-          className="w-4 h-4 text-white"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="3"
-          viewBox="0 0 24 24"
-        >
-          {isChecked && (
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M5 13l4 4L19 7"
-            />
-          )}
-        </svg>
-      </div>
-
-      <span>{service.name}</span>
-    </label>
-  );
-})}
+          {formOptions.services.map((service) => {
+            const isChecked = formData.serviceIds.includes(service.id);
+            return (
+              <label
+                key={service.id}
+                className="flex items-center gap-2 text-[0.6rem] sm:text-base cursor-pointer select-none"
+              >
+                <input
+                  type="checkbox"
+                  checked={isChecked}
+                  onChange={() => handleServiceToggle(service.id)}
+                  className="hidden"
+                />
+                <div
+                  className={`
+                    w-5 h-5
+                    flex items-center justify-center
+                    transition duration-200
+                    ${isChecked ? "bg-[var(--primary-blue-first)]" : "bg-white"}
+                  `}
+                >
+                  <svg
+                    className="w-4 h-4 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                    viewBox="0 0 24 24"
+                  >
+                    {isChecked && (
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M5 13l4 4L19 7"
+                      />
+                    )}
+                  </svg>
+                </div>
+                <span>{service.name}</span>
+              </label>
+            );
+          })}
         </div>
       </div>
     <div className="bg-[#F3F3F3] rounded-[4px] md:rounded-[12px] px-[1rem] py-[0.5rem] md:px-[1rem] md:py-[0.75rem] mb-[1rem] md:mb-[1.5rem]">
@@ -403,68 +377,63 @@ const CustomQuoteClient = ({
       </label>
     </div>
 
-<label className="pe-[1rem] flex items-start gap-2 mb-[1rem] md:mb-[3rem] text-xs md:text-base cursor-pointer">
-  <input
-    type="checkbox"
-    name="confirmation"
-    checked={formData.confirmation}
-    onChange={handleChange}
-    className="hidden"
-    required
-  />
+    <label className="pe-[1rem] flex items-start gap-2 mb-[1rem] md:mb-[3rem] text-xs md:text-base cursor-pointer">
+      <input
+        type="checkbox"
+        name="confirmation"
+        checked={formData.confirmation}
+        onChange={handleChange}
+        className="hidden"
+        required
+      />
+      <div
+        className={`
+          mt-1
+          w-5 h-5
+          flex items-center justify-center
+          transition-all duration-200
+          ${formData.confirmation ? "bg-[var(--primary-blue-first)]" : "bg-white"}
+        `}
+      >
+        <svg
+          className="w-4 h-4 text-white"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="3"
+          viewBox="0 0 24 24"
+        >
+          {formData.confirmation && (
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M5 13l4 4L19 7"
+            />
+          )}
+        </svg>
+      </div>
+      <span>{consent.label}</span>
+    </label>
 
-  <div
-    className={`
-      mt-1
-      w-5 h-5
-      flex items-center justify-center
-      transition-all duration-200
-      ${
-        formData.confirmation
-          ? "bg-[var(--primary-blue-first)]"
-          : "bg-white"
-      }
-    `}
-  >
-    <svg
-      className="w-4 h-4 text-white"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="3"
-      viewBox="0 0 24 24"
-    >
-      {formData.confirmation && (
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M5 13l4 4L19 7"
-        />
-      )}
-    </svg>
-  </div>
-
-  <span>{consent.label}</span>
-</label>
-<div className='w-[fit-content] mx-[auto] '>
-    <button
-      type="submit"
-      disabled={isSubmitting || !formData.confirmation}
-      className="text-xs md:text-base bg-[var(--primary-blue-first)] text-white font-bold py-[0.35rem] px-[1rem] md:py-[0.75rem] md:px-[3rem] hover:bg-[var(--primary-blue-second)] transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
-    >
-      {isSubmitting ? 'Sending...' : submit.text}
-    </button>
-</div>
+    <div className='w-[fit-content] mx-[auto]'>
+      <button
+        type="submit"
+        disabled={isSubmitting || !formData.confirmation}
+        className="rounded-[32px] text-xs md:text-base bg-[var(--primary-blue-first)] text-white font-bold py-[0.35rem] px-[1rem] md:py-[0.75rem] md:px-[3rem] hover:bg-[var(--primary-blue-second)] transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+      >
+        {isSubmitting ? sendingText : submit.text}
+      </button>
+    </div>
   </form>
 
           {submitError && (
-            <div className="mt-4 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-xs md:text-base text-red-700">
-              <p className="font-semibold mb-1">We couldnt send your request</p>
+            <div className="mt-4 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-xs md:text-base text-red-700 text-start">
+              <p className="font-semibold mb-1">{messages.errorTitleRequest || "We couldn't send your request"}</p>
               <p>{submitError}</p>
             </div>
           )}
           {submitSuccess && (
-            <div className="mt-4 rounded-md border border-emerald-200 bg-emerald-50 px-4 py-3 text-xs md:text-base text-emerald-800">
-              <p className="font-semibold mb-1">Thank you for your request</p>
+            <div className="mt-4 rounded-md border border-emerald-200 bg-emerald-50 px-4 py-3 text-xs md:text-base text-emerald-800 text-start">
+              <p className="font-semibold mb-1">{messages.successTitleRequest || "Thank you for your request"}</p>
               <p>{submitSuccess}</p>
             </div>
           )}

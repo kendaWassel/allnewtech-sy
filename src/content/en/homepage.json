@@ -55,7 +55,8 @@
   },
   "latestNews": {
     "title": "Latest News",
-    "description": "Stay updated with the latest in security and smart technology"
+    "description": "Stay updated with the latest in security and smart technology",
+    "readMore": "Read More"
   },
   "testimonials": {
     "title": "Testimonials",

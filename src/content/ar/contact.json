@@ -3,6 +3,48 @@
     "title": "تواصل معنا",
     "subtitle": "اتصل بنا للحصول على استشارة مجانية أو حجز زيارة ميدانية"
   },
+  "contactForm": {
+    "title": "تواصل معنا",
+    "fields": {
+      "firstName": "الاسم الأول",
+      "lastName": "اسم العائلة",
+      "email": "البريد الإلكتروني",
+      "phone": "رقم الهاتف",
+      "serviceInterest": "الخدمة المطلوبة",
+      "propertyType": "نوع العقار",
+      "message": "الرسالة"
+    },
+    "submit": "إرسال",
+    "sending": "جاري الإرسال..."
+  },
+  "messages": {
+    "sending": "جاري الإرسال...",
+    "loadError": "تعذر تحميل النموذج. يرجى المحاولة مرة أخرى!",
+    "emptyForm": "بيانات النموذج غير متوفرة حالياً. يرجى المراجعة لاحقاً!",
+    "contactLoadError": "تعذر تحميل نموذج التواصل الآن. يرجى المحاولة لاحقاً.",
+    "errorTitle": "تعذر إرسال رسالتك",
+    "successTitle": "شكراً لتواصلك معنا",
+    "errorTitleRequest": "تعذر إرسال طلبك",
+    "successTitleRequest": "شكراً على طلبك",
+    "somethingWrong": "حدث خطأ. يرجى المحاولة مرة أخرى."
+  },
+  "validation": {
+    "firstNameRequired": "الاسم الأول مطلوب.",
+    "lastNameRequired": "اسم العائلة مطلوب.",
+    "invalidEmail": "يرجى إدخال بريد إلكتروني صحيح.",
+    "invalidPhone": "يرجى إدخال رقم هاتف صحيح.",
+    "postCodeRequired": "الرمز البريدي مطلوب.",
+    "propertyTypeRequired": "يرجى اختيار نوع العقار.",
+    "serviceRequired": "يرجى اختيار خدمة واحدة على الأقل.",
+    "requirementsRequired": "يرجى إضافة متطلباتك.",
+    "preferredContactRequired": "يرجى اختيار طريقة التواصل المفضلة.",
+    "budgetRequired": "يرجى اختيار الميزانية المتوقعة.",
+    "fileRequired": "يرجى رفع ملف.",
+    "consentRequired": "يرجى تأكيد الموافقة على سياسة الخصوصية.",
+    "addressRequired": "العنوان مطلوب.",
+    "preferredTimeRequired": "يرجى اختيار الوقت المفضل.",
+    "invalidDate": "يجب أن يكون التاريخ بصيغة YYYY-MM-DD."
+  },
   "siteVisit": {
     "title": "معلومات التواصل",
     "intro": "قم بحجز تقييم ميداني احترافي مع أحد مختصينا.",
@@ -160,6 +202,7 @@
           },
           {
             "name": "fileUpload",
+            "label": "رفع ملف",
             "type": "file"
           }
         ]

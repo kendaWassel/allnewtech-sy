@@ -1,37 +1,23 @@
-import { apiConfig, getApiUrl } from '@/config/api';
+import { apiConfig, getImageUrl, fetchFromAPI } from '@/config/api';
 import LatestNewsBlogClient from './LatestNewsBlogClient';
 
 const LatestNewsBlog = async ({ newsId, locale = "en" }) => {
   let news = null;
 
   try {
-    const url = getApiUrl(`${apiConfig.endpoints.latestNews}/${newsId}`);
-    const response = await fetch(url, {
-      next: { revalidate: 60 },
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept-Language': locale,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`API request failed: ${response.status} ${response.statusText}`);
-    }
-
-    const data = await response.json();
-
-    if (!data.success) {
-      throw new Error(data.msg || 'API request was not successful');
-    }
-    news = {
-      id: data.data?.id,
-      title: data.data?.title || '',
-      content: data.data?.content || '',
-      image: data.data?.image || '',
-    };
-  } catch (err) {
-    news = null;
-  }
+  const data = await fetchFromAPI(`${apiConfig.endpoints.latestNews}/${newsId}`, {
+    next: { revalidate: 60 },
+    headers: { 'Accept-Language': locale },
+  });
+  news = {
+    id: data.data?.id,
+    title: data.data?.title || '',
+    content: data.data?.content || '',
+    image: getImageUrl(data.data?.image || '') || null,
+  };
+} catch {
+  news = null;
+}
 
   if (!news) {
     return (
