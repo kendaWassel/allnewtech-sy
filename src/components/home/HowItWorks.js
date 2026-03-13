@@ -32,7 +32,7 @@ const HowItWorks = ({ content, locale = "en" }) => {
                 <div className="relative w-full px-[0.5rem]">
                   <div className="relative aspect-[16/9] w-full overflow-hidden">
                     <Image
-                      src={`/home/step-${step.number}.svg`}
+                      src={`/home/step-${step.number}.jpg`}
                       alt={step.title}
                       fill
                       className="object-cover"
