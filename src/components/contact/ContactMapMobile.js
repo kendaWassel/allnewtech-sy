@@ -1,4 +1,3 @@
-'use client';
 import ContactMap from './ContactMap';
 
 export default function ContactMapMobile({ locations = [] }) {

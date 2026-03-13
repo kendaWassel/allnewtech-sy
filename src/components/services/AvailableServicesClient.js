@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import ServicesCTA from "./ServicesCTA";
 
-const AvailableServicesClient = ({ services, propertyType = 'Home', error = null, ctaContent, locale = "en" }) => {
+const AvailableServicesClient = ({ services, error = null, ctaContent, locale = "en" }) => {
   const [activeSection, setActiveSection] = useState(0);
   const ctaTitle = ctaContent?.title || "Start Your Project Today";
   const formatStepNumber = (value) => {
@@ -114,22 +114,14 @@ const AvailableServicesClient = ({ services, propertyType = 'Home', error = null
                 <button
                   key={service.id || index}
                   onClick={() => scrollToSection(index)}
-                  className={`cursor-pointer text-start py-3 transition relative ${
-                    activeSection === index
-                      ? ""
-                      : ""
-                  }`}
+                  className={`cursor-pointer text-start py-3 transition relative`}
                 >
                   <span className={`${activeSection === index ? "border-s-[5px] ps-2" : ""} text-xl font-bold text-[var(--secondary)]`}>{service.title}</span>
                 </button>
               ))}
               <button
                 onClick={scrollToCTA}
-                className={`cursor-pointer text-start py-3 transition-colors mt-4 relative ${
-                  activeSection === services.length
-                    ? ""
-                    : ""
-                }`}
+                className={`cursor-pointer text-start py-3 transition-colors mt-4 relative`}
               >
                 <span className={`${activeSection === services.length ? "border-s-[5px] ps-2" : ""} text-xl font-bold text-[var(--secondary)]`}>{ctaTitle}</span>
               </button>

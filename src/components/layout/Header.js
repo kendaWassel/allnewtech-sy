@@ -3,11 +3,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import HamMenu from "../ui/HamMenu";
-import { useState } from "react";
 import { siteConfig } from "@/config/site";
 
 const Header = ({ locale = "en", content }) => {
-  const [isServicesHovered, setIsServicesHovered] = useState(false);
   const otherLocale = locale === "en" ? "ar" : "en";
 
   const navItems = content?.nav || [

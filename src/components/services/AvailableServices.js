@@ -29,7 +29,6 @@ try {
   return (
     <AvailableServicesClient
       services={services}
-      propertyType={propertyType}
       error={error}
       ctaContent={ctaContent}
       locale={locale}

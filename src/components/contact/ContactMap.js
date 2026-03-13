@@ -4,7 +4,7 @@ import { useEffect, useRef, useMemo } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-const DEFAULT_CENTER = [54.5, -3]; // center of the UK
+const DEFAULT_CENTER = [54.5, -3]; // center of the UK  
 
 const defaultIcon = L.icon({
   iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
